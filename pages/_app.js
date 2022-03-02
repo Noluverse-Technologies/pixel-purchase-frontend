@@ -69,11 +69,21 @@ export default class MyApp extends App {
             name="viewport"
             content="width=device-width, initial-scale=1, shrink-to-fit=no"
           />
-          <title>NextJS Argon Dashboard by Creative Tim</title>
+          <title>Nolu</title>
           <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
         </Head>
         <Layout>
+        {/* <AuthProvider>
+        
+        {Component.requireAuth ? (
+          <AuthGuard> */}
           <Component {...pageProps} />
+          {/* </AuthGuard>
+        ) : (
+          // public page
+          <Component {...pageProps} />
+        )}
+      </AuthProvider> */}
         </Layout>
       </React.Fragment>
     );

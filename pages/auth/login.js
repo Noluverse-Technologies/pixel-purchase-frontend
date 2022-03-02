@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import LoginService from "../../services/api/services";
+
 
 // reactstrap components
 import {
@@ -17,52 +19,48 @@ import {
 } from "reactstrap";
 // layout for this page
 import Auth from "layouts/Auth.js";
+import Message from "../../components/CustomMessage/Message";
 
 function Login() {
+
+  const [email, setEmail] = useState(""); // <--- useState is the hook
+  const [password, setPassword] = useState(""); // <--- useState is the hook
+  const [message, setMessage] = useState(""); // <--- useState is the hook
+  const [messageClass, setMessageClass] = useState(""); // <--- useState is the hook
+
+  
+  
+  const handleSubmit= (e) => {
+    e.preventDefault();
+
+    let emailval=e.target["email"].value
+    let passwordval=e.target["password"].value
+
+    LoginService({email:emailval, password:passwordval}).then(data => {
+      if (data.data.token) {
+        localStorage.setItem("authToken", data.data.token);
+        window.location.href = "/";
+        setMessage(data.message);
+        setMessageClass("text-success font-weight-400")
+      } 
+    }).catch(err => {
+      setMessage("check your credentials and try again");
+      setMessageClass("text-danger font-weight-400");
+      localStorage.removeItem("authToken");
+    });
+
+  }
+
+
   return (
     <>
       <Col lg="5" md="7">
         <Card className="bg-secondary shadow border-0">
-          <CardHeader className="bg-transparent pb-5">
-            <div className="text-muted text-center mt-2 mb-3">
-              <small>Sign in with</small>
-            </div>
-            <div className="btn-wrapper text-center">
-              <Button
-                className="btn-neutral btn-icon"
-                color="default"
-                href="#pablo"
-                onClick={(e) => e.preventDefault()}
-              >
-                <span className="btn-inner--icon">
-                  <img
-                    alt="..."
-                    src={require("assets/img/icons/common/github.svg")}
-                  />
-                </span>
-                <span className="btn-inner--text">Github</span>
-              </Button>
-              <Button
-                className="btn-neutral btn-icon"
-                color="default"
-                href="#pablo"
-                onClick={(e) => e.preventDefault()}
-              >
-                <span className="btn-inner--icon">
-                  <img
-                    alt="..."
-                    src={require("assets/img/icons/common/google.svg")}
-                  />
-                </span>
-                <span className="btn-inner--text">Google</span>
-              </Button>
-            </div>
-          </CardHeader>
           <CardBody className="px-lg-5 py-lg-5">
             <div className="text-center text-muted mb-4">
-              <small>Or sign in with credentials</small>
+              <small>Sign In with</small>
             </div>
-            <Form role="form">
+            <Form role="form" onSubmit={(e) => { handleSubmit(e)}}>
               <FormGroup className="mb-3">
                 <InputGroup className="input-group-alternative">
                   <InputGroupAddon addonType="prepend">
@@ -73,6 +71,8 @@ function Login() {
                   <Input
                     placeholder="Email"
                     type="email"
+                    name="email"
+                    // defaultValue="email" {...(register('email'))}
                     autoComplete="new-email"
                   />
                 </InputGroup>
@@ -87,6 +87,9 @@ function Login() {
                   <Input
                     placeholder="Password"
                     type="password"
+                    name="password"
+                    
+                    // {...register("password")}
                     autoComplete="new-password"
                   />
                 </InputGroup>
@@ -105,10 +108,12 @@ function Login() {
                 </label>
               </div>
               <div className="text-center">
-                <Button className="my-4" color="primary" type="button">
+                <Button className="my-4" color="primary" type="submit">
                   Sign in
                 </Button>
               </div>
+             
+              <Message message={message}></Message>
             </Form>
           </CardBody>
         </Card>
