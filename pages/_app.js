@@ -13,7 +13,7 @@ import "assets/scss/nextjs-argon-dashboard.scss";
 Router.events.on("routeChangeStart", (url) => {
   console.log(`Loading: ${url}`);
   document.body.classList.add("body-page-transition");
-  ReactDOM.render(
+  ReactDOM.hydrate(
     <PageChange path={url} />,
     document.getElementById("page-transition")
   );

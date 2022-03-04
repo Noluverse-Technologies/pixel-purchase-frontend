@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState,useEffect } from "react";
 // reactstrap components
 import { Container, Row, Col } from "reactstrap";
 
@@ -7,9 +7,15 @@ import AuthNavbar from "components/Navbars/AuthNavbar.js";
 import AuthFooter from "components/Footers/AuthFooter.js";
 
 import routes from "routes.js";
+import { useRouter } from "next/router";
+
 
 function Auth(props) {
+  
+ 
+  // console.log(window.location.pathname);
   React.useEffect(() => {
+   
     document.body.classList.add("bg-default");
     // Specify how to clean up after this effect:
     return function cleanup() {
@@ -58,6 +64,20 @@ function Auth(props) {
       <AuthFooter />
     </>
   );
+}
+
+/**
+ * if user is logged in and try to go to the auth routes then it will redirect to the dashboard
+ */
+
+if(typeof window !=="undefined"){
+  
+  if(window.location.href.includes('auth')){
+    if(localStorage.getItem('authToken')){
+      window.location.href="/dashboard";
+    }
+  }
+  
 }
 
 export default Auth;

@@ -31,11 +31,12 @@ import {
 } from "variables/charts.js";
 
 import Header from "components/Headers/Header.js";
+import authProtection from "../../components/Auth/AuthProtection";
 
 const Dashboard = (props) => {
   const [activeNav, setActiveNav] = React.useState(1);
   const [chartExample1Data, setChartExample1Data] = React.useState("data1");
-
+ 
   if (window.Chart) {
     parseOptions(Chart, chartOptions());
   }
@@ -319,6 +320,6 @@ const Dashboard = (props) => {
   );
 };
 
-Dashboard.layout = Admin;
+Dashboard.layout = Admin
 
 export default Dashboard;
