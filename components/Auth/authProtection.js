@@ -4,6 +4,9 @@ import { useState } from "react";
 const authProtection = (WrappedComponent) => {
 
   return (props) => {
+
+
+
     // checks whether we are on client / browser or server.
     if (typeof window !== "undefined") {
       const router = useRouter();

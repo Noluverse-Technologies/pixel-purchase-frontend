@@ -8,10 +8,23 @@ import AuthFooter from "components/Footers/AuthFooter.js";
 
 import routes from "routes.js";
 import { useRouter } from "next/router";
+import authProtection from "../components/Auth/AuthProtection";
 
 
 function Auth(props) {
+        /**
+ * if user is logged in and try to go to the auth routes then it will redirect to the dashboard
+ */
+
+if(typeof window !=="undefined"){
   
+  if(window.location.href.includes('auth')){
+    if(localStorage.getItem('authToken')){
+      window.location.href="/login";
+    }
+  }
+  
+}
  
   // console.log(window.location.pathname);
   React.useEffect(() => {
@@ -66,18 +79,6 @@ function Auth(props) {
   );
 }
 
-/**
- * if user is logged in and try to go to the auth routes then it will redirect to the dashboard
- */
 
-if(typeof window !=="undefined"){
-  
-  if(window.location.href.includes('auth')){
-    if(localStorage.getItem('authToken')){
-      window.location.href="/dashboard";
-    }
-  }
-  
-}
 
 export default Auth;
