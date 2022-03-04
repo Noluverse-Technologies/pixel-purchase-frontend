@@ -8,9 +8,9 @@ export default function Index() {
   const [authorized, setAuthorized] = useState(false);
   
   React.useEffect(() => {
-    if(localStorage.getItem("authToken")){
-      router.push("/dashboard");
-    }
+    // if(localStorage.getItem("authToken")){
+    //   router.push("/dashboard");
+    // }
     router.push("/auth/login");
   });
 

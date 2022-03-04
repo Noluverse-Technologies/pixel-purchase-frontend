@@ -163,7 +163,17 @@ function Sidebar(props) {
                 </DropdownItem>
               </Link>
               <DropdownItem divider />
-              <DropdownItem href="#pablo" onClick={(e) => e.preventDefault()}>
+              <DropdownItem href="#pablo" onClick={(e) =>{ 
+                
+                e.preventDefault();
+
+                if(typeof window !== 'undefined'){
+                  localStorage.removeItem('authToken');
+                  
+                  window.location.href = '/auth/login';
+                }
+                
+                }}>
                 <i className="ni ni-user-run" />
                 <span>Logout</span>
               </DropdownItem>

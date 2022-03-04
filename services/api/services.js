@@ -1,8 +1,29 @@
 import axios from "axios";
+import { baseUrl } from "../../variables/config";
 
-const baseUrl="http://localhost:3000/api/";
 
 
+
+
+
+//login service
+export function GetCurrentUserInfo(authToken){
+    
+        return axios.get(baseUrl+"useinfo", { headers: {"Authorization" : `Bearer ${authToken}`} })
+        .then(res=>{
+            console.log("user information")
+            console.log(res)
+            return res.data;
+    
+        })
+        .catch(err=>{
+            console.log(err);
+        })
+    
+    
+
+
+}
 
 //login service
 export default function LoginService(creds){
@@ -14,3 +35,6 @@ export default function LoginService(creds){
         console.log(err);
     })
 }
+
+
+

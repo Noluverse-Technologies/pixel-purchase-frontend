@@ -20,6 +20,7 @@ import {
 // layout for this page
 import Auth from "layouts/Auth.js";
 import Message from "../../components/CustomMessage/Message";
+import { useRouter } from "next/router";
 
 function Login() {
 
@@ -28,7 +29,7 @@ function Login() {
   const [message, setMessage] = useState(""); // <--- useState is the hook
   const [messageClass, setMessageClass] = useState(""); // <--- useState is the hook
 
-  
+  const router=useRouter();
   
   const handleSubmit= (e) => {
     e.preventDefault();
@@ -39,7 +40,12 @@ function Login() {
     LoginService({email:emailval, password:passwordval}).then(data => {
       if (data.data.token) {
         localStorage.setItem("authToken", data.data.token);
-        window.location.href = "/";
+        // window.location.href = "/";
+
+        router.push({
+          pathname: '/admin/dashboard',
+          query: { id:data.data.info.id },
+        })
         setMessage(data.message);
         setMessageClass("text-success font-weight-400")
       } 

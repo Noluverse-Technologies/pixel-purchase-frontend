@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect,useState } from "react";
 // node.js library that concatenates classes (strings)
 import classnames from "classnames";
 // javascipt plugin for creating charts
 import Chart from "chart.js";
 // react plugin used to create charts
 import { Line, Bar } from "react-chartjs-2";
+
 // reactstrap components
 import {
   Button,
@@ -31,12 +32,13 @@ import {
 } from "variables/charts.js";
 
 import Header from "components/Headers/Header.js";
-import authProtection from "../../components/Auth/AuthProtection";
+
 
 const Dashboard = (props) => {
   const [activeNav, setActiveNav] = React.useState(1);
   const [chartExample1Data, setChartExample1Data] = React.useState("data1");
- 
+  
+
   if (window.Chart) {
     parseOptions(Chart, chartOptions());
   }

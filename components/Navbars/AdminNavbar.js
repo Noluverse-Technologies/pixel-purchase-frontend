@@ -1,5 +1,9 @@
-import React from "react";
+import React, { useEffect,useState } from "react";
 import Link from "next/link";
+import { authToken } from "../../variables/config";
+import {GetCurrentUserInfo} from "../../services/api/services";
+import { useRouter } from "next/router";
+import { rootUrl } from "../../variables/config";
 // reactstrap components
 import {
   DropdownMenu,
@@ -19,6 +23,43 @@ import {
 } from "reactstrap";
 
 function AdminNavbar({ brandText }) {
+
+
+  const router=useRouter();
+  const [userInfo, setUserInfo] = useState(null);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+ 
+
+  const [url, setRootUrl] = useState(rootUrl);
+  
+
+
+useEffect(() => {
+
+ getUserInfo();
+  
+}, []);
+
+
+
+
+async function getUserInfo(){
+ 
+  await GetCurrentUserInfo(authToken).then(data => {
+    
+    setUserInfo(data.data)
+    setFirstName(data.data.firstname)
+    setLastName(data.data.lastname)
+    
+  }).catch(err => {
+    console.log("error found") 
+  });
+
+}
+
+
+
   return (
     <>
       <Navbar className="navbar-top navbar-dark" expand="md" id="navbar-main">
@@ -44,15 +85,20 @@ function AdminNavbar({ brandText }) {
             <UncontrolledDropdown nav>
               <DropdownToggle className="pr-0" nav>
                 <Media className="align-items-center">
-                  <span className="avatar avatar-sm rounded-circle">
+                  {
+
+                    <span className="avatar avatar-sm rounded-circle">
                     <img
                       alt="..."
-                      src={require("assets/img/theme/team-4-800x800.jpg")}
-                    />
+                      src={`${url}images/user_profile_pic/${userInfo?.image}`}
+                      />
                   </span>
+                    }
                   <Media className="ml-2 d-none d-lg-block">
                     <span className="mb-0 text-sm font-weight-bold">
-                      Jessica Jones
+                      {/* get user firstname */}
+                      {firstName?firstName:''} {lastName?lastName:''}
+                    {/* {JSON.stringify(userInfo.firstname)} */}
                     </span>
                   </Media>
                 </Media>
