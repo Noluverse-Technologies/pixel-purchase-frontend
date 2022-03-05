@@ -1,4 +1,7 @@
 import React, { useEffect,useState } from "react";
+// import { Spinner } from "reactstrap";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // reactstrap components
 import {
@@ -18,6 +21,7 @@ import Admin from "layouts/Admin.js";
 // core components
 import UserHeader from "components/Headers/UserHeader.js";
 import {GetCurrentUserInfo} from "../../services/api/services";
+import {UpdateUserInfo} from "../../services/api/services";
 import { useRouter } from "next/router";
 import { rootUrl } from "../../variables/config";
 
@@ -26,11 +30,28 @@ import { rootUrl } from "../../variables/config";
 
 
 function Profile() {
+
+  const notify = () => toast("Wow so easy!");
+
   const router=useRouter();
   const [userInfo, setUserInfo] = useState(null);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [walletAddress, setWalletAddress] = useState("");
+  const [profileImage, setProfileImage] = useState(null);
+  const [isDisabled, setIsDisabled] = useState(true);
   const [url, setRootUrl] = useState(rootUrl);
+  const [isClicked, setIsClicked] = useState(false);
+
+  const [formValue, setformValue] = React.useState({
+    firstname: '',
+    lastname: '',
+    wallet_address: '',
+    image:''
+  });
+
+
   useEffect(() => {
 
     getUserInfo();
@@ -41,16 +62,83 @@ function Profile() {
 function getUserInfo(){
 
   GetCurrentUserInfo().then(data => {
-     
+     console.log("data.data[0]")
+     console.log(data.data[0].wallet_address)
+
      setUserInfo(data.data[0])
      setFirstName(data.data[0].firstname)
      setLastName(data.data[0].lastname)
+     setWalletAddress(data.data[0].wallet_address)
+     setProfileImage(data.data[0].image)
+     setProfileImage(data.data[0].image);
+     
      
    }).catch(err => {
      console.log("error found") 
    });
  
  }
+
+
+
+const handleSubmit = (event) => {
+  setIsClicked(true)
+  event.preventDefault()
+
+  // store the states in the form data
+  const profileFormData = new FormData();
+  profileFormData.append("id", userInfo.id)
+  profileFormData.append("firstname", formValue.firstname?formValue.firstname:'')
+  profileFormData.append("lastname", formValue.lastname?formValue.lastname:'')
+  profileFormData.append("wallet_address", formValue.walletAddress?formValue.walletAddress:'')
+  profileFormData.append("image", selectedImage?selectedImage:'')
+  
+
+  UpdateUserInfo(profileFormData).then(data => {
+  if(!data){
+    toast.error('🦄 Could not update', {
+      position: "top-right",
+      autoClose: 500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      });
+  }else{
+    toast.success('🦄 Successfully Updated!', {
+      position: "top-right",
+      autoClose: 500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      });
+  }
+  
+    setIsClicked(false)
+  }).catch(err => {
+    
+    toast.error('🦄 Could not update', {
+      position: "top-right",
+      autoClose: 500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      });
+  });
+  }
+
+  const handleChange = (event) => {
+    setIsDisabled(false)
+    setformValue({
+      ...formValue,
+      [event.target.name]: event.target.value
+    });
+  }
 
 
   return (
@@ -68,7 +156,7 @@ function getUserInfo(){
                       <img
                         alt="..."
                         className="rounded-circle"
-                        src={`${url}images/user_profile_pic/${userInfo?.image}`}
+                        src={`${url}images/user_profile_pic/${profileImage?profileImage:''}`}
                       />
                     </a>
                   </div>
@@ -92,7 +180,7 @@ function getUserInfo(){
                     onClick={(e) => e.preventDefault()}
                     size="sm"
                   >
-                    Message
+                    changess
                   </Button> */}
                 </div>
               </CardHeader>
@@ -166,7 +254,7 @@ function getUserInfo(){
                 </Row>
               </CardHeader> */}
               <CardBody>
-                <Form>
+                <Form onSubmit={handleSubmit}>
                 <Row className="align-items-center">
                   <Col xs="8">
                     <h3 className="mb-0">My account</h3>
@@ -174,14 +262,24 @@ function getUserInfo(){
                   <Col className="text-right" xs="4">
                     <Button
                       color="primary"
-                      disabled={true}
-                      href="#pablo"
-                      onClick={(e) => e.preventDefault()}
+                      disabled={isDisabled}
                       size="sm"
+                      type="submit"
+                      style={{marginBottom: "0.7rem"}}
                       
                     >
-                      Save
+                      Save 
+                   
                     </Button>
+                    {/* { isClicked == true && */}
+                      
+                    {/* } */}
+
+                  {/* <Spinner 
+                      color="white"
+                      style={{ width: "2rem", height: "2rem", borderWidth: ".3rem", backgroundColor:"#323261" }}
+                    /> */}
+                    
                   </Col>
                 </Row>
                   <h6 className="heading-small text-muted mb-4">
@@ -198,7 +296,7 @@ function getUserInfo(){
                             User Role
                           </label>
                           <Input
-                          disabled
+                          disabled={true}
                             className="form-control-alternative"
                             defaultValue={userInfo?.has_role[0].name}
                             id="input-username"
@@ -216,6 +314,7 @@ function getUserInfo(){
                             Email address
                           </label>
                           <Input
+                            disabled={true}
                             className="form-control-alternative"
                             id="input-email"
                             defaultValue={userInfo?.email}
@@ -239,7 +338,9 @@ function getUserInfo(){
                             defaultValue={userInfo?userInfo.firstname:''}
                             id="input-first-name"
                             placeholder="First name"
+                            name="firstname"
                             type="text"
+                            onChange={handleChange}
                           />
                         </FormGroup>
                       </Col>
@@ -256,10 +357,37 @@ function getUserInfo(){
                             defaultValue={userInfo?userInfo.lastname:''}
                             id="input-last-name"
                             placeholder="Last name"
+                            name="lastname"
                             type="text"
+                            onChange={handleChange}
                           />
                         </FormGroup>
                       </Col>
+                    </Row>
+                    <Row>
+                      <Col lg="12">
+                      <FormGroup>
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-last-name"
+                          >
+                            Last name
+                          </label>
+                          <Input
+                            className="form-control-alternative"
+                            defaultValue={userInfo?userInfo.image:''}
+                            id="input-img-upload"
+                            placeholder="Profile Image"
+                            name="profileImage"
+                            type="file"
+                            onChange={(event) => {
+                              setIsDisabled(false)
+                              
+                              setSelectedImage(event.target.files[0]);
+                            }}
+                          />
+                        </FormGroup>
+                        </Col>
                     </Row>
                   </div>
                   <hr className="my-4" />
@@ -281,9 +409,11 @@ function getUserInfo(){
                             className="form-control-alternative"
                             defaultValue={userInfo?userInfo.wallet_address:''}
                             id="input-address"
-                            
                             placeholder="Wallet Address"
+                            name="walletAddress"
+                            onChange={handleChange}
                             type="text"
+                            
                           />
                         </FormGroup>
                       </Col>
@@ -345,8 +475,23 @@ function getUserInfo(){
                   {/* Description */}
                   <h6 className="heading-small text-muted mb-4">My Pixels</h6>
                   <div className="pl-lg-4">
+                    
+                    <ToastContainer
+                      position="top-right"
+                      autoClose={5000}
+                      hideProgressBar={false}
+                      newestOnTop={false}
+                      closeOnClick
+                      rtl={false}
+                      pauseOnFocusLoss
+                      draggable
+                      pauseOnHover
+                      />
+                      {/* Same as */}
+                      <ToastContainer />
+                  
                     <FormGroup>
-                      <label>My list of pixels</label>
+                      {/* <label>My list of pixels</label> */}
                       <Input
                         className="form-control-alternative"
                         placeholder="A few words about you ..."
