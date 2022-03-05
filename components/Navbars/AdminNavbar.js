@@ -29,8 +29,6 @@ function AdminNavbar({ brandText }) {
   const [userInfo, setUserInfo] = useState(null);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
- 
-
   const [url, setRootUrl] = useState(rootUrl);
   
 
@@ -42,16 +40,14 @@ useEffect(() => {
 }, []);
 
 
-
-
 function getUserInfo(){
  
 
  GetCurrentUserInfo().then(data => {
     
-    setUserInfo(data.data)
-    setFirstName(data.data.firstname)
-    setLastName(data.data.lastname)
+    setUserInfo(data.data[0])
+    setFirstName(data.data[0].firstname)
+    setLastName(data.data[0].lastname)
     
   }).catch(err => {
     console.log("error found") 

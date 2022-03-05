@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect,useState } from "react";
 
 // reactstrap components
 import {
@@ -17,8 +17,42 @@ import {
 import Admin from "layouts/Admin.js";
 // core components
 import UserHeader from "components/Headers/UserHeader.js";
+import {GetCurrentUserInfo} from "../../services/api/services";
+import { useRouter } from "next/router";
+import { rootUrl } from "../../variables/config";
+
+
+
+
 
 function Profile() {
+  const router=useRouter();
+  const [userInfo, setUserInfo] = useState(null);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [url, setRootUrl] = useState(rootUrl);
+  useEffect(() => {
+
+    getUserInfo();
+     
+   }, []);
+
+
+function getUserInfo(){
+
+  GetCurrentUserInfo().then(data => {
+     
+     setUserInfo(data.data[0])
+     setFirstName(data.data[0].firstname)
+     setLastName(data.data[0].lastname)
+     
+   }).catch(err => {
+     console.log("error found") 
+   });
+ 
+ }
+
+
   return (
     <>
       <UserHeader />
@@ -34,7 +68,7 @@ function Profile() {
                       <img
                         alt="..."
                         className="rounded-circle"
-                        src={require("assets/img/theme/team-4-800x800.jpg")}
+                        src={`${url}images/user_profile_pic/${userInfo?.image}`}
                       />
                     </a>
                   </div>
@@ -42,7 +76,7 @@ function Profile() {
               </Row>
               <CardHeader className="text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
                 <div className="d-flex justify-content-between">
-                  <Button
+                  {/* <Button
                     className="mr-4"
                     color="info"
                     href="#pablo"
@@ -50,8 +84,8 @@ function Profile() {
                     size="sm"
                   >
                     Connect
-                  </Button>
-                  <Button
+                  </Button> */}
+                  {/* <Button
                     className="float-right"
                     color="default"
                     href="#pablo"
@@ -59,11 +93,11 @@ function Profile() {
                     size="sm"
                   >
                     Message
-                  </Button>
+                  </Button> */}
                 </div>
               </CardHeader>
               <CardBody className="pt-0 pt-md-4">
-                <Row>
+                {/* <Row>
                   <div className="col">
                     <div className="card-profile-stats d-flex justify-content-center mt-md-5">
                       <div>
@@ -80,11 +114,11 @@ function Profile() {
                       </div>
                     </div>
                   </div>
-                </Row>
-                <div className="text-center">
+                </Row> */}
+                <div className="text-center mt-7">
                   <h3>
-                    Jessica Jones
-                    <span className="font-weight-light">, 27</span>
+                    {firstName} {lastName}
+                    {/* <span className="font-weight-light">, 27</span> */}
                   </h3>
                   <div className="h5 font-weight-300">
                     <i className="ni location_pin mr-2" />
@@ -104,16 +138,16 @@ function Profile() {
                     Nick Murphy — writes, performs and records all of his own
                     music.
                   </p>
-                  <a href="#pablo" onClick={(e) => e.preventDefault()}>
+                  {/* <a href="#pablo" onClick={(e) => e.preventDefault()}>
                     Show more
-                  </a>
+                  </a> */}
                 </div>
               </CardBody>
             </Card>
           </Col>
           <Col className="order-xl-1" xl="8">
             <Card className="bg-secondary shadow">
-              <CardHeader className="bg-white border-0">
+              {/* <CardHeader className="bg-white border-0">
                 <Row className="align-items-center">
                   <Col xs="8">
                     <h3 className="mb-0">My account</h3>
@@ -124,14 +158,32 @@ function Profile() {
                       href="#pablo"
                       onClick={(e) => e.preventDefault()}
                       size="sm"
+                      
                     >
                       Settings
                     </Button>
                   </Col>
                 </Row>
-              </CardHeader>
+              </CardHeader> */}
               <CardBody>
                 <Form>
+                <Row className="align-items-center">
+                  <Col xs="8">
+                    <h3 className="mb-0">My account</h3>
+                  </Col>
+                  <Col className="text-right" xs="4">
+                    <Button
+                      color="primary"
+                      disabled={true}
+                      href="#pablo"
+                      onClick={(e) => e.preventDefault()}
+                      size="sm"
+                      
+                    >
+                      Save
+                    </Button>
+                  </Col>
+                </Row>
                   <h6 className="heading-small text-muted mb-4">
                     User information
                   </h6>
@@ -143,11 +195,12 @@ function Profile() {
                             className="form-control-label"
                             htmlFor="input-username"
                           >
-                            Username
+                            User Role
                           </label>
                           <Input
+                          disabled
                             className="form-control-alternative"
-                            defaultValue="lucky.jesse"
+                            defaultValue={userInfo?.has_role[0].name}
                             id="input-username"
                             placeholder="Username"
                             type="text"
@@ -165,7 +218,8 @@ function Profile() {
                           <Input
                             className="form-control-alternative"
                             id="input-email"
-                            placeholder="jesse@example.com"
+                            defaultValue={userInfo?.email}
+                            placeholder="jessse@example.com"
                             type="email"
                           />
                         </FormGroup>
@@ -182,7 +236,7 @@ function Profile() {
                           </label>
                           <Input
                             className="form-control-alternative"
-                            defaultValue="Lucky"
+                            defaultValue={userInfo?userInfo.firstname:''}
                             id="input-first-name"
                             placeholder="First name"
                             type="text"
@@ -199,7 +253,7 @@ function Profile() {
                           </label>
                           <Input
                             className="form-control-alternative"
-                            defaultValue="Jesse"
+                            defaultValue={userInfo?userInfo.lastname:''}
                             id="input-last-name"
                             placeholder="Last name"
                             type="text"
@@ -211,7 +265,7 @@ function Profile() {
                   <hr className="my-4" />
                   {/* Address */}
                   <h6 className="heading-small text-muted mb-4">
-                    Contact information
+                    Wallet information
                   </h6>
                   <div className="pl-lg-4">
                     <Row>
@@ -221,19 +275,20 @@ function Profile() {
                             className="form-control-label"
                             htmlFor="input-address"
                           >
-                            Address
+                            Wallet Address
                           </label>
                           <Input
                             className="form-control-alternative"
-                            defaultValue="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09"
+                            defaultValue={userInfo?userInfo.wallet_address:''}
                             id="input-address"
-                            placeholder="Home Address"
+                            
+                            placeholder="Wallet Address"
                             type="text"
                           />
                         </FormGroup>
                       </Col>
                     </Row>
-                    <Row>
+                    {/* <Row>
                       <Col lg="4">
                         <FormGroup>
                           <label
@@ -284,14 +339,14 @@ function Profile() {
                           />
                         </FormGroup>
                       </Col>
-                    </Row>
+                    </Row> */}
                   </div>
                   <hr className="my-4" />
                   {/* Description */}
-                  <h6 className="heading-small text-muted mb-4">About me</h6>
+                  <h6 className="heading-small text-muted mb-4">My Pixels</h6>
                   <div className="pl-lg-4">
                     <FormGroup>
-                      <label>About Me</label>
+                      <label>My list of pixels</label>
                       <Input
                         className="form-control-alternative"
                         placeholder="A few words about you ..."
