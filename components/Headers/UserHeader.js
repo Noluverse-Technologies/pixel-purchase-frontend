@@ -1,9 +1,35 @@
-import React from "react";
-
+import React, { useEffect,useState } from "react";
+import {GetCurrentUserInfo} from "../../services/api/services";
 // reactstrap components
 import { Button, Container, Row, Col } from "reactstrap";
+import { useRouter } from "next/router";
+
+
+
 
 function UserHeader() {
+
+  const router=useRouter();
+  const [userInfo, setUserInfo] = useState(null);
+
+
+  useEffect(() => {
+    getUserInfo();
+  }, []);
+
+  function getUserInfo(){
+
+    GetCurrentUserInfo().then(data => {
+  
+  console.log("data from user header")
+  console.log(data.data[0])
+       setUserInfo(data.data[0])
+      
+     }).catch(err => {
+       console.log("error found") 
+     });
+   
+   }
   return (
     <>
       <div
@@ -22,7 +48,7 @@ function UserHeader() {
         <Container className="d-flex align-items-center" fluid>
           <Row>
             <Col lg="7" md="10">
-              <h1 className="display-2 text-white">Hello Jesse</h1>
+              <h1 className="display-2 text-white">Hello {userInfo?.firstname}</h1>
               <p className="text-white mt-0 mb-5">
                 Welcome to nolu user profile. You can view and update your profile information here.
               </p>

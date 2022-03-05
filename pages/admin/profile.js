@@ -91,7 +91,10 @@ const handleSubmit = (event) => {
   profileFormData.append("firstname", formValue.firstname?formValue.firstname:'')
   profileFormData.append("lastname", formValue.lastname?formValue.lastname:'')
   profileFormData.append("wallet_address", formValue.walletAddress?formValue.walletAddress:'')
-  profileFormData.append("image", selectedImage?selectedImage:'')
+  if(selectedImage){
+    profileFormData.append("image", selectedImage)
+  }
+  // profileFormData.append("image", selectedImage?selectedImage:'')
   
 
   UpdateUserInfo(profileFormData).then(data => {
@@ -116,8 +119,8 @@ const handleSubmit = (event) => {
       progress: undefined,
       });
   }
-  
-    setIsClicked(false)
+  window.location.reload()
+    setIsDisabled(true)
   }).catch(err => {
     
     toast.error('🦄 Could not update', {
