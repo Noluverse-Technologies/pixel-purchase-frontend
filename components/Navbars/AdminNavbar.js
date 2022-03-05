@@ -1,6 +1,6 @@
 import React, { useEffect,useState } from "react";
 import Link from "next/link";
-import { authToken } from "../../variables/config";
+// import { authToken } from "../../variables/config";
 import {GetCurrentUserInfo} from "../../services/api/services";
 import { useRouter } from "next/router";
 import { rootUrl } from "../../variables/config";
@@ -44,9 +44,10 @@ useEffect(() => {
 
 
 
-async function getUserInfo(){
+function getUserInfo(){
  
-  await GetCurrentUserInfo(authToken).then(data => {
+
+ GetCurrentUserInfo().then(data => {
     
     setUserInfo(data.data)
     setFirstName(data.data.firstname)

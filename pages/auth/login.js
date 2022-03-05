@@ -40,6 +40,7 @@ function Login() {
     LoginService({email:emailval, password:passwordval}).then(data => {
       if (data.data.token) {
         localStorage.setItem("authToken", data.data.token);
+        localStorage.setItem("isLoggedin", true);
         // window.location.href = "/";
 
         router.push({
