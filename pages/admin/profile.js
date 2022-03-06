@@ -44,7 +44,7 @@ function Profile() {
   const [url, setRootUrl] = useState(rootUrl);
   const [isClicked, setIsClicked] = useState(false);
   const [changePasswordType, setChangePasswordType] = useState("password");
-  const [showHidePassword, setShowHidePassword] = useState("fa fa-eye-slash");
+  const [showHidePassword, setShowHidePassword] = useState("fa fa-eye");
 
   const [formValue, setformValue] = React.useState({
     firstname: '',
@@ -140,10 +140,10 @@ const handleSubmit = (event) => {
   const showHidePwd = () => {
     if (changePasswordType === "password") {
       setChangePasswordType("text");
-      setShowHidePassword("fa fa-eye");
+      setShowHidePassword("fa fa-eye-slash");
     } else {
       setChangePasswordType("password");
-      setShowHidePassword("fa fa-eye-slash");
+      setShowHidePassword("fa fa-eye");
     }
   };
 
@@ -495,7 +495,7 @@ const handleSubmit = (event) => {
                             className="form-control-label"
                             htmlFor="input-address"
                           >
-                            Change Password
+                            Change Password <small>Minimum 6 charecters</small>
                           </label>
                           <Input
                             className="form-control-alternative"
