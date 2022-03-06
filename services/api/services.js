@@ -35,6 +35,16 @@ export function GetCurrentUserInfo(){
 }
 
 
+//user registration
+export function UserRegistration(userInfo){
+    return axios.post(baseUrl+"register",userInfo)
+    .then(res=>{
+        return res.data;
+    })
+    .catch(err=>{
+        console.log(err);
+    })
+}
 
 
 //get logged in user information service

@@ -43,6 +43,8 @@ function Profile() {
   const [isDisabled, setIsDisabled] = useState(true);
   const [url, setRootUrl] = useState(rootUrl);
   const [isClicked, setIsClicked] = useState(false);
+  const [changePasswordType, setChangePasswordType] = useState("password");
+  const [showHidePassword, setShowHidePassword] = useState("fa fa-eye-slash");
 
   const [formValue, setformValue] = React.useState({
     firstname: '',
@@ -135,6 +137,16 @@ const handleSubmit = (event) => {
   });
   }
 
+  const showHidePwd = () => {
+    if (changePasswordType === "password") {
+      setChangePasswordType("text");
+      setShowHidePassword("fa fa-eye");
+    } else {
+      setChangePasswordType("password");
+      setShowHidePassword("fa fa-eye-slash");
+    }
+  };
+
   const handleChange = (event) => {
     setIsDisabled(false)
     setformValue({
@@ -225,9 +237,10 @@ const handleSubmit = (event) => {
                   </div>
                   <hr className="my-4" />
                   <p>
-                    Ryan — the name taken by Melbourne-raised, Brooklyn-based
-                    Nick Murphy — writes, performs and records all of his own
-                    music.
+                    Full Name: {firstName?firstName:''} {lastName?lastName:''} 
+                  </p>
+                  <p>
+                    Role: {userInfo?.has_role[0].name}
                   </p>
                   {/* <a href="#pablo" onClick={(e) => e.preventDefault()}>
                     Show more
@@ -374,7 +387,7 @@ const handleSubmit = (event) => {
                             className="form-control-label"
                             htmlFor="input-last-name"
                           >
-                            Last name
+                            Update Profile Image
                           </label>
                           <Input
                             className="form-control-alternative"
@@ -474,9 +487,38 @@ const handleSubmit = (event) => {
                       </Col>
                     </Row> */}
                   </div>
-                  <hr className="my-4" />
+                  <div className="pl-lg-4">
+                    <Row>
+                      <Col md="10">
+                        <FormGroup>
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-address"
+                          >
+                            Change Password
+                          </label>
+                          <Input
+                            className="form-control-alternative"
+                            id="input-address"
+                            placeholder="Password"
+                            name="password"
+                            onChange={handleChange}
+                            type={changePasswordType}
+                            
+                          />
+                          
+                        </FormGroup>
+                        
+                      </Col>
+                      <Col md="2">
+                      <button type="button" className="btn btn-pwd-view shadow-none"><i className={showHidePassword} onClick={showHidePwd}></i></button>
+                        
+                      </Col>
+                    </Row>
+                  </div>
+                  {/* <hr className="my-4" /> */}
                   {/* Description */}
-                  <h6 className="heading-small text-muted mb-4">My Pixels</h6>
+                  {/* <h6 className="heading-small text-muted mb-4">My Pixels</h6> */}
                   <div className="pl-lg-4">
                     
                     <ToastContainer
@@ -493,17 +535,16 @@ const handleSubmit = (event) => {
                       {/* Same as */}
                       <ToastContainer />
                   
-                    <FormGroup>
-                      {/* <label>My list of pixels</label> */}
+                    {/* <FormGroup>
+                    
                       <Input
                         className="form-control-alternative"
                         placeholder="A few words about you ..."
                         rows="4"
-                        defaultValue="A beautiful Dashboard for Bootstrap 4. It is Free and
-                          Open Source."
+                        defaultValue="This user has no pixels"
                         type="textarea"
                       />
-                    </FormGroup>
+                    </FormGroup> */}
                   </div>
                 </Form>
               </CardBody>
