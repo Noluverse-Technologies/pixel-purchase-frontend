@@ -50,7 +50,8 @@ function Profile() {
     firstname: '',
     lastname: '',
     wallet_address: '',
-    image:''
+    image:'',
+    password:''
   });
 
 
@@ -93,6 +94,7 @@ const handleSubmit = (event) => {
   profileFormData.append("firstname", formValue.firstname?formValue.firstname:'')
   profileFormData.append("lastname", formValue.lastname?formValue.lastname:'')
   profileFormData.append("wallet_address", formValue.walletAddress?formValue.walletAddress:'')
+  profileFormData.append("password", formValue.password?formValue.password:'')
   if(selectedImage){
     profileFormData.append("image", selectedImage)
   }
