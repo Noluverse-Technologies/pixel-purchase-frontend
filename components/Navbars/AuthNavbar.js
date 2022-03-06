@@ -59,14 +59,14 @@ function AdminNavbar() {
                   </NavLink>
                 </Link>
               </NavItem>
-              {/* <NavItem>
+              <NavItem>
                 <Link href="/auth/register">
                   <NavLink href="#pablo" className="nav-link-icon">
                     <i className="ni ni-circle-08" />
                     <span className="nav-link-inner--text">Register</span>
                   </NavLink>
                 </Link>
-              </NavItem> */}
+              </NavItem>
               <NavItem>
                 <Link href="/auth/login">
                   <NavLink href="#pablo" className="nav-link-icon">

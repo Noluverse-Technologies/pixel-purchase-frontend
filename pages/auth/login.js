@@ -107,12 +107,12 @@ function Login() {
                   id=" customCheckLogin"
                   type="checkbox"
                 />
-                <label
+                {/* <label
                   className="custom-control-label"
                   htmlFor=" customCheckLogin"
                 >
                   <span className="text-muted">Remember me</span>
-                </label>
+                </label> */}
               </div>
               <div className="text-center">
                 <Button className="my-4" color="primary" type="submit">
@@ -125,7 +125,7 @@ function Login() {
           </CardBody>
         </Card>
         <Row className="mt-3">
-          <Col xs="6">
+          {/* <Col xs="6">
             <a
               className="text-light"
               href="#pablo"
@@ -133,16 +133,16 @@ function Login() {
             >
               <small>Forgot password?</small>
             </a>
-          </Col>
-          <Col className="text-right" xs="6">
+          </Col> */}
+          {/* <Col className="text-right" xs="6">
             <a
               className="text-light"
-              href="#pablo"
+              href="/auth/register"
               onClick={(e) => e.preventDefault()}
             >
               <small>Create new account</small>
             </a>
-          </Col>
+          </Col> */}
         </Row>
       </Col>
     </>

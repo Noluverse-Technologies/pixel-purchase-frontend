@@ -229,13 +229,13 @@ const handleSubmit = (event) => {
                     <i className="ni location_pin mr-2" />
                     Bucharest, Romania
                   </div>
-                  <div className="h5 mt-4">
+                  {/* <div className="h5 mt-4">
                     <i className="ni business_briefcase-24 mr-2" />
                     Solution Manager - Creative Tim Officer
-                  </div>
+                  </div> */}
                   <div>
                     <i className="ni education_hat mr-2" />
-                    University of Computer Science
+                    User Subscription Type
                   </div>
                   <hr className="my-4" />
                   <p>
