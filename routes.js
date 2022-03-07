@@ -6,8 +6,8 @@ var routes = [
     layout: "/admin",
   },
   {
-    path: "/icons",
-    name: "Icons",
+    path: "/pixels",
+    name: "Pixels",
     icon: "ni ni-planet text-blue",
     layout: "/admin",
   },
