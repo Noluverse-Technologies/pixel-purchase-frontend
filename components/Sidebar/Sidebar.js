@@ -229,11 +229,27 @@ function Sidebar(props) {
           {/* Navigation */}
           <Nav navbar>{createLinks(routes)}</Nav>
           {/* Divider */}
-          <hr className="my-3" />
+          {/* <hr className="my-3" /> */}
           {/* Heading */}
-          <h6 className="navbar-heading text-muted">Documentation</h6>
+          <h6 className="navbar-heading text-muted mt-8 mb-4 ml-5">Social Media</h6>
+          <hr></hr>
           {/* Navigation */}
-          <Nav className="mb-md-3" navbar>
+            <Nav className="mb-md-1" navbar>
+            <NavItem>
+          <button type="button" class="btn btn-discord btn-icon ml-2">
+            <span class="btn-inner--icon"><i class="fab fa-discord"></i></span>
+          </button>
+          <button type="button" class="btn btn-twitter btn-icon">
+            <span class="btn-inner--icon"><i class="fab fa-twitter"></i></span>
+          </button>
+          <button type="button" class="btn btn-instagram btn-icon">
+            <span class="btn-inner--icon"><i class="fab fa-instagram"></i></span>
+          </button>
+   
+            </NavItem>
+            </Nav>
+           
+          {/* <Nav className="mb-md-3" navbar>
             <NavItem>
               <NavLink href="https://www.creative-tim.com/learning-lab/nextjs/overview/argon-dashboard?ref=njsad-admin-sidebar">
                 <i className="ni ni-spaceship" />
@@ -260,7 +276,7 @@ function Sidebar(props) {
                 Upgrade to PRO
               </NavLink>
             </NavItem>
-          </Nav>
+          </Nav> */}
         </Collapse>
       </Container>
     </Navbar>

@@ -4,7 +4,7 @@ import classnames from "classnames";
 // javascipt plugin for creating charts
 import Chart from "chart.js";
 // react plugin used to create charts
-import { Line, Bar } from "react-chartjs-2";
+import { Line, Bar, Pie } from "react-chartjs-2";
 
 // reactstrap components
 import {
@@ -12,6 +12,7 @@ import {
   Card,
   CardHeader,
   CardBody,
+  CardTitle,
   NavItem,
   NavLink,
   Nav,
@@ -37,7 +38,24 @@ import Header from "components/Headers/Header.js";
 const Dashboard = (props) => {
   const [activeNav, setActiveNav] = React.useState(1);
   const [chartExample1Data, setChartExample1Data] = React.useState("data1");
-  
+
+  const data = {
+    labels: [
+      'Nolu',
+      'Rewards',
+      'Redeemable'
+    ],
+    datasets: [{
+      label: 'My First Dataset',
+      data: [300, 50, 100],
+      backgroundColor: [
+        'rgb(255, 99, 132)',
+        'rgb(54, 162, 235)',
+        'rgb(255, 205, 86)'
+      ],
+      hoverOffset: 4
+    }]
+  };
 
   if (window.Chart) {
     parseOptions(Chart, chartOptions());
@@ -64,7 +82,7 @@ const Dashboard = (props) => {
                     </h6>
                     <h2 className="text-white mb-0">Sales value</h2>
                   </div>
-                  <div className="col">
+                  {/* <div className="col">
                     <Nav className="justify-content-end" pills>
                       <NavItem>
                         <NavLink
@@ -92,17 +110,37 @@ const Dashboard = (props) => {
                         </NavLink>
                       </NavItem>
                     </Nav>
-                  </div>
+                  </div> */}
                 </Row>
               </CardHeader>
+
+
               <CardBody>
                 {/* Chart */}
                 <div className="chart">
-                  <Line
+                  {/* <Line
                     data={chartExample1[chartExample1Data]}
                     options={chartExample1.options}
                     getDatasetAtEvent={(e) => console.log(e)}
-                  />
+                  /> */}
+                  <Pie
+                    data={data}
+                    options={{
+                      maintainAspectRatio: false,
+                      legend: {
+                        display: false,
+                      },
+                      tooltips: {
+                        bodySpacing: 4,
+                        mode: "nearest",
+                        intersect: 0,
+                        position: "nearest",
+                        xPadding: 10,
+                        yPadding: 10,
+                        caretPadding: 10,
+                      },
+                    }}
+                    ></Pie>
                 </div>
               </CardBody>
             </Card>
@@ -113,9 +151,9 @@ const Dashboard = (props) => {
                 <Row className="align-items-center">
                   <div className="col">
                     <h6 className="text-uppercase text-muted ls-1 mb-1">
-                      Performance
+                      <span style={{color:"red"}}>*</span> Nolu <span style={{color:"blue"}}>*</span> Usdt
                     </h6>
-                    <h2 className="mb-0">Total orders</h2>
+                    <h2 className="mb-0">Rewards Earned</h2>
                   </div>
                 </Row>
               </CardHeader>
@@ -131,6 +169,125 @@ const Dashboard = (props) => {
             </Card>
           </Col>
         </Row>
+        {/* Exp code starts */}
+ <Row className="mt-4">
+              <Col lg="6" xl="3">
+                <Card className="card-stats mb-4 mb-xl-0">
+                  <CardBody>
+                    <Row>
+                      <div className="col">
+                        <CardTitle
+                          tag="h5"
+                          className="text-uppercase text-muted mb-0"
+                        >
+                          Traffic
+                        </CardTitle>
+                        <span className="h2 font-weight-bold mb-0">
+                          350,897
+                        </span>
+                      </div>
+                      <Col className="col-auto">
+                        <div className="icon icon-shape bg-danger text-white rounded-circle shadow">
+                          <i className="fas fa-chart-bar" />
+                        </div>
+                      </Col>
+                    </Row>
+                    <p className="mt-3 mb-0 text-muted text-sm">
+                      <span className="text-success mr-2">
+                        <i className="fa fa-arrow-up" /> 3.48%
+                      </span>{" "}
+                      <span className="text-nowrap">Since last month</span>
+                    </p>
+                  </CardBody>
+                </Card>
+              </Col>
+              <Col lg="6" xl="3">
+                <Card className="card-stats mb-4 mb-xl-0">
+                  <CardBody>
+                    <Row>
+                      <div className="col">
+                        <CardTitle
+                          tag="h5"
+                          className="text-uppercase text-muted mb-0"
+                        >
+                          New users
+                        </CardTitle>
+                        <span className="h2 font-weight-bold mb-0">2,356</span>
+                      </div>
+                      <Col className="col-auto">
+                        <div className="icon icon-shape bg-warning text-white rounded-circle shadow">
+                          <i className="fas fa-chart-pie" />
+                        </div>
+                      </Col>
+                    </Row>
+                    <p className="mt-3 mb-0 text-muted text-sm">
+                      <span className="text-danger mr-2">
+                        <i className="fas fa-arrow-down" /> 3.48%
+                      </span>{" "}
+                      <span className="text-nowrap">Since last week</span>
+                    </p>
+                  </CardBody>
+                </Card>
+              </Col>
+              <Col lg="6" xl="3">
+                <Card className="card-stats mb-4 mb-xl-0">
+                  <CardBody>
+                    <Row>
+                      <div className="col">
+                        <CardTitle
+                          tag="h5"
+                          className="text-uppercase text-muted mb-0"
+                        >
+                          Sales
+                        </CardTitle>
+                        <span className="h2 font-weight-bold mb-0">924</span>
+                      </div>
+                      <Col className="col-auto">
+                        <div className="icon icon-shape bg-yellow text-white rounded-circle shadow">
+                          <i className="fas fa-users" />
+                        </div>
+                      </Col>
+                    </Row>
+                    <p className="mt-3 mb-0 text-muted text-sm">
+                      <span className="text-warning mr-2">
+                        <i className="fas fa-arrow-down" /> 1.10%
+                      </span>{" "}
+                      <span className="text-nowrap">Since yesterday</span>
+                    </p>
+                  </CardBody>
+                </Card>
+              </Col>
+              <Col lg="6" xl="3">
+                <Card className="card-stats mb-4 mb-xl-0">
+                  <CardBody>
+                    <Row>
+                      <div className="col">
+                        <CardTitle
+                          tag="h5"
+                          className="text-uppercase text-muted mb-0"
+                        >
+                          Performance
+                        </CardTitle>
+                        <span className="h2 font-weight-bold mb-0">49,65%</span>
+                      </div>
+                      <Col className="col-auto">
+                        <div className="icon icon-shape bg-info text-white rounded-circle shadow">
+                          <i className="fas fa-percent" />
+                        </div>
+                      </Col>
+                    </Row>
+                    <p className="mt-3 mb-0 text-muted text-sm">
+                      <span className="text-success mr-2">
+                        <i className="fas fa-arrow-up" /> 12%
+                      </span>{" "}
+                      <span className="text-nowrap">Since last month</span>
+                    </p>
+                  </CardBody>
+                </Card>
+              </Col>
+              
+</Row>
+{/* Exp code ends */}
         <Row className="mt-5">
           <Col className="mb-5 mb-xl-0" xl="8">
             <Card className="shadow">
@@ -213,9 +370,9 @@ const Dashboard = (props) => {
               <CardHeader className="border-0">
                 <Row className="align-items-center">
                   <div className="col">
-                    <h3 className="mb-0">Social traffic</h3>
+                    <h3 className="mb-0">Nolu Market</h3>
                   </div>
-                  <div className="col text-right">
+                  {/* <div className="col text-right">
                     <Button
                       color="primary"
                       href="#pablo"
@@ -224,93 +381,34 @@ const Dashboard = (props) => {
                     >
                       See all
                     </Button>
-                  </div>
+                  </div> */}
                 </Row>
               </CardHeader>
               <Table className="align-items-center table-flush" responsive>
                 <thead className="thead-light">
                   <tr>
-                    <th scope="col">Referral</th>
-                    <th scope="col">Visitors</th>
-                    <th scope="col" />
+                    <th scope="col">Price Per Nolu</th>
+                    <th scope="col">Market Cap</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <th scope="row">Facebook</th>
-                    <td>1,480</td>
-                    <td>
-                      <div className="d-flex align-items-center">
-                        <span className="mr-2">60%</span>
-                        <div>
-                          <Progress
-                            max="100"
-                            value="60"
-                            barClassName="bg-gradient-danger"
-                          />
-                        </div>
-                      </div>
-                    </td>
+                    <th scope="row">$2.5222</th>
+                    <td>$7923,077</td>
                   </tr>
+                </tbody>
+              </Table>
+              <Table className="align-items-center table-flush" responsive>
+                <thead className="thead-light">
                   <tr>
-                    <th scope="row">Facebook</th>
-                    <td>5,480</td>
-                    <td>
-                      <div className="d-flex align-items-center">
-                        <span className="mr-2">70%</span>
-                        <div>
-                          <Progress
-                            max="100"
-                            value="70"
-                            barClassName="bg-gradient-success"
-                          />
-                        </div>
-                      </div>
-                    </td>
+                    <th scope="col">Change%</th>
+                    <th scope="col">Treasury Balance</th>
                   </tr>
+                </thead>
+                <tbody>
                   <tr>
-                    <th scope="row">Google</th>
-                    <td>4,807</td>
-                    <td>
-                      <div className="d-flex align-items-center">
-                        <span className="mr-2">80%</span>
-                        <div>
-                          <Progress max="100" value="80" />
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Instagram</th>
-                    <td>3,678</td>
-                    <td>
-                      <div className="d-flex align-items-center">
-                        <span className="mr-2">75%</span>
-                        <div>
-                          <Progress
-                            max="100"
-                            value="75"
-                            barClassName="bg-gradient-info"
-                          />
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">twitter</th>
-                    <td>2,645</td>
-                    <td>
-                      <div className="d-flex align-items-center">
-                        <span className="mr-2">30%</span>
-                        <div>
-                          <Progress
-                            max="100"
-                            value="30"
-                            barClassName="bg-gradient-warning"
-                          />
-                        </div>
-                      </div>
-                    </td>
+                    <th scope="row"><i style={{ color: '#66ff00', size: '50px' }} class="fas fa-chart-line"></i> 2%</th>
+                    <td>$7923,077</td>
                   </tr>
                 </tbody>
               </Table>

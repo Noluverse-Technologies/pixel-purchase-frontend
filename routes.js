@@ -1,7 +1,7 @@
 var routes = [
   {
     path: "/dashboard",
-    name: "Dashboard",
+    name: "Overview",
     icon: "ni ni-tv-2 text-primary",
     layout: "/admin",
   },
@@ -12,23 +12,24 @@ var routes = [
     layout: "/admin",
   },
   {
-    path: "/maps",
-    name: "Maps",
-    icon: "ni ni-pin-3 text-orange",
+    path: "/tables",
+    name: "Transactions",
+    icon: "ni ni-bullet-list-67 text-red",
     layout: "/admin",
   },
   {
     path: "/profile",
-    name: "User Profile",
+    name: "Profile",
     icon: "ni ni-single-02 text-yellow",
     layout: "/admin",
   },
-  {
-    path: "/tables",
-    name: "Tables",
-    icon: "ni ni-bullet-list-67 text-red",
+   {
+    path: "/maps",
+    name: "Nolu +",
+    icon: "ni ni-pin-3 text-orange",
     layout: "/admin",
   },
+
   // {
   //   path: "/login",
   //   name: "Login",

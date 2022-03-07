@@ -64,8 +64,8 @@ const Pixels = () => {
                     {/* The below row is going to be repeated */}
                     <Row>
                     <Col lg="6" md="6" >
-                      <button
-                      
+                      <Button
+                        disabled={true}
                         className="btn-icon-clipboard pointer:none"
                         data-clipboard-text="air-baloon"
                         id="tooltip475504343"
@@ -77,7 +77,7 @@ const Pixels = () => {
                           <i className="ni ni-app" />
                           <span>Pixel 1</span>
                         </div>
-                      </button>
+                      </Button>
                     
                     <UncontrolledTooltip
                       delay={0}
@@ -88,8 +88,8 @@ const Pixels = () => {
                     </UncontrolledTooltip> 
                       </Col>
                     <Col lg="6" md="6" >
-                      <button
-                      
+                      <Button
+                       disabled={true}
                         className="btn-icon-clipboard pointer:none"
                         data-clipboard-text="air-baloon"
                         id="tooltip475504343"
@@ -101,7 +101,7 @@ const Pixels = () => {
                           <i className="ni ni-app" />
                           <span>Pixel 1</span>
                         </div>
-                      </button>
+                      </Button>
                     
                     <UncontrolledTooltip
                       delay={0}
@@ -138,6 +138,8 @@ const Pixels = () => {
           </div>
           
         </Row>
+
+        
         {/* Licenses */}
         <Row className="mt-2">
           <div className="col-8">
