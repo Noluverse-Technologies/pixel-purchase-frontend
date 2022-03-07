@@ -48,7 +48,7 @@ const Pixels = () => {
       <Container className="mt--7" fluid>
         {/* Table */}
         <Row>
-          <div className="col-8">
+          <div className="col-12 col-md-8">
             <Card className="shadow">
               <CardHeader className="bg-transparent">
                 <h3 className="mb-0">Pixels</h3>
@@ -87,7 +87,7 @@ const Pixels = () => {
                       {"Click to purchase this pixel"}
                     </UncontrolledTooltip> 
                       </Col>
-                    <Col lg="6" md="6" >
+                    <Col lg="6" md="6" sm="12" >
                       <Button
                        disabled={true}
                         className="btn-icon-clipboard pointer:none"
@@ -112,17 +112,12 @@ const Pixels = () => {
                     </UncontrolledTooltip>
                       </Col>
                     </Row>
-                  
-                   
-                    
-                    
-                      
                   </Col>
                 </Row>
               </CardBody>
             </Card>
           </div>
-          <div className="col-4">
+          <div className="col-12 col-md-4">
             <Card className="shadow">
               <CardHeader className="bg-transparent">
                 <h3 className="mb-0">Events</h3>
@@ -139,10 +134,10 @@ const Pixels = () => {
           
         </Row>
 
-        
+
         {/* Licenses */}
         <Row className="mt-2">
-          <div className="col-8">
+          <div className="col-12 col-md-8">
             <Card className="shadow">
               <CardHeader className="bg-transparent">
                 <h3 className="mb-0">Licenses</h3>
@@ -220,7 +215,7 @@ const Pixels = () => {
 
        
         <Row>
-        <div className="col-8 mt-2 ">
+        <div className="col-12 col-md-8 mt-2 ">
             {/* <Card className="shadow">
               <CardHeader className="bg-transparent">
                 <h3 className="mb-0">My Pixels</h3>

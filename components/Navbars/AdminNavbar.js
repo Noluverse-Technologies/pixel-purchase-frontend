@@ -110,24 +110,24 @@ function getUserInfo(){
                     <span>My profile</span>
                   </DropdownItem>
                 </Link>
-                <Link href="/admin/profile">
+                {/* <Link href="/admin/profile">
                   <DropdownItem>
                     <i className="ni ni-settings-gear-65" />
                     <span>Settings</span>
                   </DropdownItem>
-                </Link>
-                <Link href="/admin/profile">
+                </Link> */}
+                {/* <Link href="/admin/profile">
                   <DropdownItem>
                     <i className="ni ni-calendar-grid-58" />
                     <span>Activity</span>
                   </DropdownItem>
-                </Link>
-                <Link href="/admin/profile">
+                </Link> */}
+                {/* <Link href="/admin/profile">
                   <DropdownItem>
                     <i className="ni ni-support-16" />
                     <span>Support</span>
                   </DropdownItem>
-                </Link>
+                </Link> */}
                 <DropdownItem divider />
                 <DropdownItem href="#pablo" onClick={(e) => {e.preventDefault()
               if(typeof window !=='undefined') {

@@ -109,9 +109,9 @@ function Sidebar(props) {
         {/* User */}
         <Nav className="align-items-center d-md-none">
           <UncontrolledDropdown nav>
-            <DropdownToggle nav className="nav-link-icon">
+            {/* <DropdownToggle nav className="nav-link-icon">
               <i className="ni ni-bell-55" />
-            </DropdownToggle>
+            </DropdownToggle> */}
             <DropdownMenu
               aria-labelledby="navbar-default_dropdown_1"
               className="dropdown-menu-arrow"
@@ -144,24 +144,24 @@ function Sidebar(props) {
                   <span>My profile</span>
                 </DropdownItem>
               </Link>
-              <Link href="/admin/profile">
+              {/* <Link href="/admin/profile">
                 <DropdownItem>
                   <i className="ni ni-settings-gear-65" />
                   <span>Settings</span>
                 </DropdownItem>
-              </Link>
-              <Link href="/admin/profile">
+              </Link> */}
+              {/* <Link href="/admin/profile">
                 <DropdownItem>
                   <i className="ni ni-calendar-grid-58" />
                   <span>Activity</span>
                 </DropdownItem>
-              </Link>
-              <Link href="/admin/profile">
+              </Link> */}
+              {/* <Link href="/admin/profile">
                 <DropdownItem>
                   <i className="ni ni-support-16" />
                   <span>Support</span>
                 </DropdownItem>
-              </Link>
+              </Link> */}
               <DropdownItem divider />
               <DropdownItem href="#pablo" onClick={(e) =>{ 
                 
