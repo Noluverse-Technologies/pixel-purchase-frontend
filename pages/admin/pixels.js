@@ -1,6 +1,9 @@
-import React, { useState } from "react";
+import React, { useState,useEffect,Fragment } from "react";
 // react component that copies the given text inside your clipboard
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import {GetPixelPackagesService} from "../../services/api/services";
+import {GetLicensePackagesService} from "../../services/api/services";
+import { Dialog,Transition } from '@headlessui/react'
 // reactstrap components
 import {
   Card,
@@ -40,7 +43,63 @@ import Admin from "layouts/Admin.js";
 import Header from "components/Headers/Header.js";
 
 const Pixels = () => {
-  const [copiedText, setCopiedText] = useState();
+  // const [copiedText, setCopiedText] = useState();
+  const [isDisabled, setIsDisabled] = useState(false);
+  const [pixelData, setPixelData]=useState([])
+  const [licenseData, setLicenseData]=useState([])
+  const [currentActiveLicense, setCurrentActiveLicense]=useState(0)
+  let [isOpen, setIsOpen] = useState(true)
+
+  useEffect(() => {
+
+    GetPixelPackages(); 
+    GetLicensePackages();
+     
+   }, []);
+
+   //get pixel packages
+   function GetPixelPackages(){
+ 
+     GetPixelPackagesService().then(data => {
+        console.log("get pixel packages data")
+        console.log(data.data.length)
+   
+        setPixelData(data.data)
+        
+      }).catch(err => {
+        console.log("error found") 
+      });
+    
+    }
+
+   //get license packages
+   function GetLicensePackages(){
+ 
+     GetLicensePackagesService().then(data => {
+        console.log("get license packages data")
+        console.log(data.data)
+   
+        setLicenseData(data.data)
+        
+      }).catch(err => {
+        console.log("error found") 
+      });
+    
+    }
+   
+    function purchasePixels(pixel_id,license_id){
+      alert("license and pixel id is "+pixel_id+" "+license_id)
+      setCurrentActiveLicense(license_id)
+    }
+
+    function closeModal() {
+      setIsOpen(false)
+    }
+  
+    function openModal() {
+      setIsOpen(true)
+    }
+
   return (
     <>
       <Header />
@@ -61,21 +120,23 @@ const Pixels = () => {
                       <p>Owners receive rewards in $Nolu and $usdt for shared participation in the <strong>Noluverse</strong> backend</p>
                   </Col>
                   <Col lg="6" md="6" >
-                    {/* The below row is going to be repeated */}
+                   
                     <Row>
+                       {/* The below column is going to be repeated */}
+                       {pixelData.map(function(d, idx){
+                         return (
                     <Col lg="6" md="6" >
                       <Button
-                        disabled={true}
                         className="btn-icon-clipboard pointer:none"
                         data-clipboard-text="air-baloon"
                         id="tooltip475504343"
                         type="button"
-                        
-                        onClick={() => alert("hello dolly 2")}
+                        key={d.id}
+                        onClick={() => {purchasePixels(d.id, d.license_id)}}
                       >
                         <div>
                           <i className="ni ni-app" />
-                          <span>Pixel 1</span>
+                          <span>{d.short_name}</span>
                         </div>
                       </Button>
                     
@@ -84,33 +145,10 @@ const Pixels = () => {
                       trigger="hover focus"
                       target="tooltip475504343"
                     >
-                      {"Click to purchase this pixel"}
+                      {"Click to purchase this package"}
                     </UncontrolledTooltip> 
                       </Col>
-                    <Col lg="6" md="6" sm="12" >
-                      <Button
-                       disabled={true}
-                        className="btn-icon-clipboard pointer:none"
-                        data-clipboard-text="air-baloon"
-                        id="tooltip475504343"
-                        type="button"
-                        
-                        onClick={() => alert("hello dolly 2")}
-                      >
-                        <div>
-                          <i className="ni ni-app" />
-                          <span>Pixel 1</span>
-                        </div>
-                      </Button>
-                    
-                    <UncontrolledTooltip
-                      delay={0}
-                      trigger="hover focus"
-                      target="tooltip475504343"
-                    >
-                      {"Click to purchase this pixel"}
-                    </UncontrolledTooltip>
-                      </Col>
+                       )})} 
                     </Row>
                   </Col>
                 </Row>
@@ -150,62 +188,38 @@ const Pixels = () => {
                       <p>Owners receive rewards in $Nolu and $usdt for shared participation in the <strong>Noluverse</strong> backend</p>
                   </Col>
                   <Col lg="6" md="6" >
-                    {/* The below row is going to be repeated */}
                     <Row>
+                    {/* The below column is going to be repeated */}
+                    
+                    {licenseData.map(function(l, idx){
+                      return (
                     <Col lg="6" md="6" >
-                      <button
-                      
-                        className="btn-icon-clipboard pointer:none"
+                      <button 
+                        disabled={currentActiveLicense === l.id ? false : true}
+                        className="btn btn-success licenseButton btn-icon-clipboard pointer:none"
                         data-clipboard-text="air-baloon"
-                        id="tooltip475504343"
+                        id="tooltip475504346"
                         type="button"
                         
-                        onClick={() => alert("hello dolly 2")}
+                        
+                        onClick={() => alert(l.pixel_id)}
                       >
                         <div>
                           <i className="ni ni-badge" />
-                          <span>License 1</span>
+                          <span>{l.short_name}</span>
                         </div>
                       </button>
                     
                     <UncontrolledTooltip
                       delay={0}
                       trigger="hover focus"
-                      target="tooltip475504343"
+                      target="tooltip475504346"
                     >
-                      {"Click to purchase this pixel"}
-                    </UncontrolledTooltip> 
-                      </Col>
-                    <Col lg="6" md="6" >
-                      <button
-                      
-                        className="btn-icon-clipboard pointer:none"
-                        data-clipboard-text="air-baloon"
-                        id="tooltip475504343"
-                        type="button"
-                        
-                        onClick={() => alert("hello dolly 2")}
-                      >
-                        <div>
-                          <i className="ni ni-badge" />
-                          <span>License 1</span>
-                        </div>
-                      </button>
-                    
-                    <UncontrolledTooltip
-                      delay={0}
-                      trigger="hover focus"
-                      target="tooltip475504343"
-                    >
-                      {"Click to purchase this pixel"}
+                      {"Click to purchase this License"}
                     </UncontrolledTooltip>
                       </Col>
-                    </Row>
-                  
-                   
-                    
-                    
-                      
+                    )})} 
+                    </Row>          
                   </Col>
                 </Row>
               </CardBody>

@@ -1,10 +1,16 @@
 import axios from "axios";
 import { baseUrl } from "../../variables/config";
 
-
-
-
-
+//user registration
+export function UserRegistration(userInfo){
+    return axios.post(baseUrl+"register",userInfo)
+    .then(res=>{
+        return res.data;
+    })
+    .catch(err=>{
+        console.log(err);
+    })
+}
 
 
 //login service
@@ -35,18 +41,6 @@ export function GetCurrentUserInfo(){
 }
 
 
-//user registration
-export function UserRegistration(userInfo){
-    return axios.post(baseUrl+"register",userInfo)
-    .then(res=>{
-        return res.data;
-    })
-    .catch(err=>{
-        console.log(err);
-    })
-}
-
-
 //get logged in user information service
 export function UpdateUserInfo(updateObj){
 
@@ -72,3 +66,31 @@ export function UpdateUserInfo(updateObj){
         })
 }
 
+
+//get the list of pixel packages
+export function GetPixelPackagesService(){
+    let authToken=localStorage.getItem("authToken");
+    return  axios.get(baseUrl+"pixel/package/view", { headers: {"Authorization" : `Bearer ${authToken}`} })
+    .then(res=>{
+        console.log("here is pixel data")
+        console.log(res.data.data[0])
+        return res.data;
+    })
+    .catch(err=>{
+        console.log(err);
+    })
+}
+
+//get the list of license packages
+export function GetLicensePackagesService(){
+    let authToken=localStorage.getItem("authToken");
+    return  axios.get(baseUrl+"license/package/view", { headers: {"Authorization" : `Bearer ${authToken}`} })
+    .then(res=>{
+        console.log("here is license data")
+        console.log(res.data.data[0])
+        return res.data;
+    })
+    .catch(err=>{
+        console.log(err);
+    })
+}
