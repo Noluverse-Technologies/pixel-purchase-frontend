@@ -8,7 +8,12 @@
 
 .licenseButton:not(:disabled):not(.disabled) {
   cursor: pointer;
-  background-color: yellowgreen;
+  background-color: #2dce89;
+  color: white !important;
+}
+
+.licenseButton span {
+  color: red;
 }
 
 .btn:disabled:not(.disabled) {

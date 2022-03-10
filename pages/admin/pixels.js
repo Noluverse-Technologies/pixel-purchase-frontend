@@ -3,7 +3,8 @@ import React, { useState,useEffect,Fragment } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import {GetPixelPackagesService} from "../../services/api/services";
 import {GetLicensePackagesService} from "../../services/api/services";
-import { Dialog,Transition } from '@headlessui/react'
+import { Dialog,Transition } from '@headlessui/react';
+
 // reactstrap components
 import {
   Card,
@@ -35,12 +36,17 @@ import {
   Pagination,
   PaginationItem,
   PaginationLink,
-  Table
+  Table, 
+  Modal, 
+  ModalBody, 
+  ModalFooter
 } from "reactstrap";  
 // layout for this page
 import Admin from "layouts/Admin.js";
 // core components
 import Header from "components/Headers/Header.js";
+import {GetCurrentUserInfo} from "../../services/api/services";
+// import ModalComp from "../../components/ModalComp/ModalComp";
 
 const Pixels = () => {
   // const [copiedText, setCopiedText] = useState();
@@ -48,15 +54,31 @@ const Pixels = () => {
   const [pixelData, setPixelData]=useState([])
   const [licenseData, setLicenseData]=useState([])
   const [currentActiveLicense, setCurrentActiveLicense]=useState(0)
+  const [currentActivePixel, setCurrentActivePixel]=useState(0)
   let [isOpen, setIsOpen] = useState(true)
+  const [modalOpen, setModalOpen] = useState(false);
+  const [userInfo, setUserInfo] = useState(null);
 
   useEffect(() => {
+    
 
     GetPixelPackages(); 
     GetLicensePackages();
+    getUserInfo();
      
    }, []);
 
+   function getUserInfo(){
+
+    GetCurrentUserInfo().then(data => {
+  
+       setUserInfo(data.data[0])
+      
+     }).catch(err => {
+       console.log("error found") 
+     });
+   
+   }
    //get pixel packages
    function GetPixelPackages(){
  
@@ -87,26 +109,69 @@ const Pixels = () => {
     
     }
    
-    function purchasePixels(pixel_id,license_id){
-      alert("license and pixel id is "+pixel_id+" "+license_id)
-      setCurrentActiveLicense(license_id)
+    function purchasePixels(p){
+      
+      setModalOpen(!modalOpen)
+      setCurrentActivePixel(p.id)
+      setCurrentActiveLicense(p.license_id)
     }
 
-    function closeModal() {
-      setIsOpen(false)
-    }
+  function closeModal(e){
+    console.log(e.target.value)
+    setModalOpen(!modalOpen)
+  }
+
+  function confirmPurchase(){
+    alert(currentActivePixel)
+    window.scrollTo({ top: 600, behavior: "smooth" });
+    setModalOpen(!modalOpen)
+  }
   
-    function openModal() {
-      setIsOpen(true)
-    }
-
+   
   return (
     <>
       <Header />
+{/* Modal Starts */}
+      <Modal toggle={() => setModalOpen(!modalOpen)} isOpen={modalOpen}>
+        <div className=" modal-header">
+          <h5 className=" modal-title" id="exampleModalLabel">
+           Confirm Purchase
+          </h5>
+          <button
+            aria-label="Close"
+            className=" close"
+            type="button"
+            onClick={() => setModalOpen(!modalOpen)}
+          >
+            <span aria-hidden={true}>×</span>
+          </button>
+        </div>
+        <ModalBody>Confirm Purchase Pixel</ModalBody>
+        <ModalFooter>
+          <Button
+            color="secondary"
+            type="button"
+            onClick={(e) => { 
+              closeModal(e)
+              }}
+          >
+            Close
+          </Button>
+          <Button color="success" type="button" onClick={(e) => { 
+              confirmPurchase(e)
+              }}>
+            Confirm Purchase 
+          </Button>
+        </ModalFooter>
+      </Modal>
+{/* Modal Ends */}
+
+
       {/* Page content */}
       <Container className="mt--7" fluid>
         {/* Table */}
         <Row>
+      
           <div className="col-12 col-md-8">
             <Card className="shadow">
               <CardHeader className="bg-transparent">
@@ -132,11 +197,19 @@ const Pixels = () => {
                         id="tooltip475504343"
                         type="button"
                         key={d.id}
-                        onClick={() => {purchasePixels(d.id, d.license_id)}}
+                        onClick={() => {purchasePixels(d)}}
                       >
                         <div>
-                          <i className="ni ni-app" />
-                          <span>{d.short_name}</span>
+                          <i className="ni ni-app " />
+                         
+                        </div>
+                        <div>
+                          {/* <i className="ni ni-badge" /> */}
+                          <h5 className="mt-2">{d.name}</h5>
+                        </div>
+                        <div>
+                          {/* <i className="ni ni-badge" /> */}
+                          <h2>${d.price}</h2>
                         </div>
                       </Button>
                     
@@ -188,7 +261,7 @@ const Pixels = () => {
                       <p>Owners receive rewards in $Nolu and $usdt for shared participation in the <strong>Noluverse</strong> backend</p>
                   </Col>
                   <Col lg="6" md="6" >
-                    <Row>
+                    <Row id="licenses">
                     {/* The below column is going to be repeated */}
                     
                     {licenseData.map(function(l, idx){
@@ -205,8 +278,16 @@ const Pixels = () => {
                         onClick={() => alert(l.pixel_id)}
                       >
                         <div>
-                          <i className="ni ni-badge" />
-                          <span>{l.short_name}</span>
+                          <i className="ni ni-badge text-center" />
+                         
+                        </div>
+                        <div>
+                          {/* <i className="ni ni-badge" /> */}
+                          <h5 className="mt-2">{l.name}</h5>
+                        </div>
+                        <div>
+                          {/* <i className="ni ni-badge" /> */}
+                          <h2>${l.price}</h2>
                         </div>
                       </button>
                     
