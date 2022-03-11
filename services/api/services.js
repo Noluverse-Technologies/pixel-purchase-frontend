@@ -115,6 +115,24 @@ export function CreateUserSubscriptionService(subscriptionObj){
         console.log(err);
     })
 }
+export function purchaseLicenseService(licenseObject){
+    let authToken=localStorage.getItem("authToken");
+    return axios({
+        method: "post",
+        url: baseUrl+"subscribe/edit",
+        data: licenseObject,
+        headers: {
+            "Authorization" : `Bearer ${authToken}`,
+            "Content-type": "application/json"
+        }
+      })
+    .then(res=>{
+        return res.data;
+    })
+    .catch(err=>{
+        console.log(err);
+    })
+}
 
 
 export function GetUserSubscriptionByIdService(user_id,pageNum){

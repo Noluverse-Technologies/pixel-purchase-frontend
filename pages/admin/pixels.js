@@ -44,6 +44,7 @@ import Admin from "layouts/Admin.js";
 import Header from "components/Headers/Header.js";
 import {GetCurrentUserInfo} from "../../services/api/services";
 import {CreateUserSubscriptionService} from "../../services/api/services";
+import {purchaseLicenseService} from "../../services/api/services";
 
 
 const Pixels = () => {
@@ -57,6 +58,7 @@ const Pixels = () => {
   const [pixelPurchaseModalOpen, setPixelPurchaseModal] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
   const [pixelPurchased, setPixelPurchased] = useState(false);
+  const [pixelSubscriptionObj, setPixelSubscriptionObj] = useState(null);
 
   useEffect(() => {
     
@@ -123,7 +125,7 @@ const Pixels = () => {
     
   }
 
-  function confirmPurchase(){
+  function confirmPurchasePixel(){
 
     setPixelPurchaseModal(!pixelPurchaseModalOpen)
     
@@ -143,8 +145,8 @@ const Pixels = () => {
   function CreateUserSubscription(subscriptionObject){
 
     CreateUserSubscriptionService(subscriptionObject).then(data => {
-          console.log("this is user data")
-          console.log(data.success)
+          console.log("setPixelSubscriptionObj")
+          console.log(data)
           if(data.success){
             toast.success(`🦄 Successfully  ${currentActivePixel.name} purchased!`, {
               position: "top-right",
@@ -156,8 +158,11 @@ const Pixels = () => {
               progress: undefined,
               });
 
+
+
     window.scrollTo({ top: 800, behavior: "smooth" });
     setPixelPurchased(true)
+    setPixelSubscriptionObj(data)
 
           }else{
             toast.error('🦄 Purchase unsuccessful', {
@@ -177,10 +182,35 @@ const Pixels = () => {
   }
   
 
-  function licensePurchase(l){
+  function confirmLicensePurchase(l){
+
+    console.log("License purchase functionality");
+    console.log(pixelSubscriptionObj.data.id);
+
+   
+
     if(pixelPurchased){
-      
-   alert("you are good to go")
+      console.log("expiration date");
+      console.log(l.duration_in_days);
+      let today = new Date();
+      let expirationDate = new Date();
+          expirationDate.setDate(today.getDate()+ parseInt(l.duration_in_days));
+          
+
+          let licensePurchaseObj={
+            id:pixelSubscriptionObj?pixelSubscriptionObj.data.id:null,
+            license_id:l.id,
+            license_purchase_date:new Date(),
+            license_duration:l.duration_in_days,
+            license_expiration_date:expirationDate,
+            withdrawal_amount_is_paid:0,
+            has_expired:0,
+            nolu_reward_amount:0,
+            usdt_reward_amount:0,
+          }
+
+     purchaseLicense(licensePurchaseObj);
+   
     }else{
       toast.error(`🦄 You Must Purchase ${currentActivePixel.name} Pixel first`, {
         position: "top-right",
@@ -193,6 +223,43 @@ const Pixels = () => {
         });
     }
   }
+
+   function purchaseLicense(licensePurchaseObj){
+     
+    purchaseLicenseService(licensePurchaseObj).then(data => {
+      console.log("trying to create license subscription");
+      console.log(data);
+      
+//       if(data.success){
+//         toast.success(`🦄 Successfully  ${currentActivePixel.name} purchased!`, {
+//           position: "top-right",
+//           autoClose: 3000,
+//           hideProgressBar: false,
+//           closeOnClick: true,
+//           pauseOnHover: true,
+//           draggable: true,
+//           progress: undefined,
+//           });
+
+//       window.scrollTo({ top: 800, behavior: "smooth" });
+//       setPixelPurchased(true)
+
+//       }else{
+//         toast.error('🦄 Purchase unsuccessful', {
+//           position: "top-right",
+//           autoClose: 3000,
+//           hideProgressBar: false,
+//           closeOnClick: true,
+//           pauseOnHover: true,
+//           draggable: true,
+//           progress: undefined,
+//           });
+
+// window.scrollTo({ top: 600, behavior: "smooth" });
+
+//       }
+})
+   }
    
   return (
     <>
@@ -228,7 +295,7 @@ const Pixels = () => {
           <Button color="success" type="button" onClick={(e) => { 
             console.log("here is e");
             console.log(e);
-              confirmPurchase(e)
+              confirmPurchasePixel(e)
               }}>
             Confirm Purchase 
           </Button>
@@ -346,7 +413,7 @@ const Pixels = () => {
                         
                         
                         onClick={() => {
-licensePurchase(l)
+confirmLicensePurchase(l)
                         }}
                       >
                         <div>
