@@ -184,19 +184,12 @@ const Pixels = () => {
 
   function confirmLicensePurchase(l){
 
-    console.log("License purchase functionality");
-    console.log(pixelSubscriptionObj.data.id);
-
-   
-
-    if(pixelPurchased){
+    if(pixelPurchased==true){
       console.log("expiration date");
       console.log(l.duration_in_days);
       let today = new Date();
       let expirationDate = new Date();
           expirationDate.setDate(today.getDate()+ parseInt(l.duration_in_days));
-          
-
           let licensePurchaseObj={
             id:pixelSubscriptionObj?pixelSubscriptionObj.data.id:null,
             license_id:l.id,
@@ -230,34 +223,39 @@ const Pixels = () => {
       console.log("trying to create license subscription");
       console.log(data);
       
-//       if(data.success){
-//         toast.success(`🦄 Successfully  ${currentActivePixel.name} purchased!`, {
-//           position: "top-right",
-//           autoClose: 3000,
-//           hideProgressBar: false,
-//           closeOnClick: true,
-//           pauseOnHover: true,
-//           draggable: true,
-//           progress: undefined,
-//           });
+      
+      if(data.success){
+        setPixelPurchased(false)
+        toast.success(`🦄 Successfully  ${currentActivePixel.name} purchased!`, {
+          position: "top-right",
+          autoClose: 600,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          });
 
-//       window.scrollTo({ top: 800, behavior: "smooth" });
-//       setPixelPurchased(true)
+          setTimeout(() => {
+            let reload=window.location.reload()
+            alert(reload)
+          }, 1000);
 
-//       }else{
-//         toast.error('🦄 Purchase unsuccessful', {
-//           position: "top-right",
-//           autoClose: 3000,
-//           hideProgressBar: false,
-//           closeOnClick: true,
-//           pauseOnHover: true,
-//           draggable: true,
-//           progress: undefined,
-//           });
 
-// window.scrollTo({ top: 600, behavior: "smooth" });
+      }else{
+        toast.error('🦄 Purchase unsuccessful', {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          });
 
-//       }
+window.scrollTo({ top: 600, behavior: "smooth" });
+
+      }
 })
    }
    
