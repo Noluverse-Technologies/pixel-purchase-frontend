@@ -30,7 +30,7 @@ export function GetCurrentUserInfo(){
     let authToken=localStorage.getItem("authToken");
         return  axios.get(baseUrl+"useinfo", { headers: {"Authorization" : `Bearer ${authToken}`} })
         .then(res=>{
-            console.log("user information")
+            console.log("user information isss")
             console.log(res)
             return res.data;
     
@@ -135,11 +135,27 @@ export function purchaseLicenseService(licenseObject){
 }
 
 
-export function GetUserSubscriptionByIdService(user_id,pageNum){
+export function GetUserSubscriptionsByIdService(userObj,pageNum){
     let authToken=localStorage.getItem("authToken");
-    return  axios.get(baseUrl+"subscribe/view/"+user_id+"?page="+pageNum, { headers: {"Authorization" : `Bearer ${authToken}`} })
+    return  axios.get(baseUrl+"subscribe/view_user_subscription/"+userObj.id+"?page="+pageNum, { headers: {"Authorization" : `Bearer ${authToken}`} })
     .then(res=>{
         console.log("here is user subscription data")
+        console.log(res.data.data[0])
+        return res.data;
+    })
+    .catch(err=>{
+        console.log(err);
+    })
+}
+
+
+export function GetAllUserSubscriptionsByUser(userObj){
+    console.log("received user informatinfaf")
+    console.log(userObj)
+    let authToken=localStorage.getItem("authToken");
+    return  axios.get(baseUrl+"subscribe/view_all_subscription_by_user/"+userObj.id, { headers: {"Authorization" : `Bearer ${authToken}`} })
+    .then(res=>{
+        console.log("here is user subscription data by user")
         console.log(res.data.data[0])
         return res.data;
     })

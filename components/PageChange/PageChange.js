@@ -15,9 +15,9 @@ export default function PageChange(props) {
             style={{ width: "6rem", height: "6rem", borderWidth: ".3rem" }}
           />
         </div>
-        <h4 className="title text-white">
-          Loading page contents for: {props.path}
-        </h4>
+        <h2 className="title text-white">
+          Loading ...
+        </h2>
       </div>
     </div>
   );

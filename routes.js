@@ -23,6 +23,12 @@ var routes = [
     icon: "ni ni-single-02 text-yellow",
     layout: "/admin",
   },
+  // {
+  //   path: "/allpixels",
+  //   name: "All User Pixels",
+  //   icon: "ni ni-single-02 text-yellow",
+  //   layout: "/admin",
+  // },
    {
     path: "/maps",
     name: "Nolu +",

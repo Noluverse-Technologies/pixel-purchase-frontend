@@ -1,9 +1,6 @@
 import React, { useState,useEffect,Fragment } from "react";
-// react component that copies the given text inside your clipboard
-import { CopyToClipboard } from "react-copy-to-clipboard";
 import {GetPixelPackagesService} from "../../services/api/services";
 import {GetLicensePackagesService} from "../../services/api/services";
-import { Dialog,Transition } from '@headlessui/react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 // reactstrap components
@@ -15,25 +12,19 @@ import {
   Row,
   Col,
   UncontrolledTooltip,
+  FormGroup,
+  Form,
+  Input,
+  InputGroupAddon,
+  InputGroupText,
+  InputGroup
 } from "reactstrap";
 
-
+import MyPixelsTable from "../../components/MyPixelsTable/MyPixelsTable";
 
 // reactstrap components
 import {
   Button,
-  Media,  
-  Badge,
-  Progress,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-  CardFooter,
-  Pagination,
-  PaginationItem,
-  PaginationLink,
-  Table, 
   Modal, 
   ModalBody, 
   ModalFooter
@@ -45,20 +36,21 @@ import Header from "components/Headers/Header.js";
 import {GetCurrentUserInfo} from "../../services/api/services";
 import {CreateUserSubscriptionService} from "../../services/api/services";
 import {purchaseLicenseService} from "../../services/api/services";
+import {GetUserSubscriptionsByIdService} from "../../services/api/services";
 
 
 const Pixels = () => {
-  // const [copiedText, setCopiedText] = useState();
-  const [isDisabled, setIsDisabled] = useState(false);
+ 
   const [pixelData, setPixelData]=useState([])
   const [licenseData, setLicenseData]=useState([])
   const [currentActiveLicense, setCurrentActiveLicense]=useState(0)
   const [currentActivePixel, setCurrentActivePixel]=useState(null)
-  let [isOpen, setIsOpen] = useState(true)
   const [pixelPurchaseModalOpen, setPixelPurchaseModal] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
   const [pixelPurchased, setPixelPurchased] = useState(false);
   const [pixelSubscriptionObj, setPixelSubscriptionObj] = useState(null);
+  const [userSubscriptions, setUserSubscriptions] = useState(null);
+  const [pageNum, setPageNum] = useState(1);
 
   useEffect(() => {
     
@@ -66,8 +58,17 @@ const Pixels = () => {
     GetPixelPackages(); 
     GetLicensePackages();
     getUserInfo();
+
+    getUserSubscriptionsById(userInfo?userInfo:[])
      
    }, []);
+
+  useEffect(() => {
+ 
+
+    getUserSubscriptionsById(userInfo?userInfo:[])
+     
+   }, [userInfo]);
 
    function getUserInfo(){
 
@@ -157,9 +158,7 @@ const Pixels = () => {
               draggable: true,
               progress: undefined,
               });
-
-
-
+              getUserSubscriptionsById(userInfo)
     window.scrollTo({ top: 800, behavior: "smooth" });
     setPixelPurchased(true)
     setPixelSubscriptionObj(data)
@@ -183,29 +182,40 @@ const Pixels = () => {
   
 
   function confirmLicensePurchase(l){
-
-    if(pixelPurchased==true){
-      console.log("expiration date");
-      console.log(l.duration_in_days);
-      let today = new Date();
-      let expirationDate = new Date();
-          expirationDate.setDate(today.getDate()+ parseInt(l.duration_in_days));
-          let licensePurchaseObj={
-            id:pixelSubscriptionObj?pixelSubscriptionObj.data.id:null,
-            license_id:l.id,
-            license_purchase_date:new Date(),
-            license_duration:l.duration_in_days,
-            license_expiration_date:expirationDate,
-            withdrawal_amount_is_paid:0,
-            has_expired:0,
-            nolu_reward_amount:0,
-            usdt_reward_amount:0,
-          }
-
-     purchaseLicense(licensePurchaseObj);
-   
-    }else{
-      toast.error(`🦄 You Must Purchase ${currentActivePixel.name} Pixel first`, {
+    if (confirm("Confirm Purchase License!") == true) {
+      if(pixelPurchased==true){
+        console.log("expiration date");
+        console.log(l.duration_in_days);
+        let today = new Date();
+        let expirationDate = new Date();
+            expirationDate.setDate(today.getDate()+ parseInt(l.duration_in_days));
+            let licensePurchaseObj={
+              id:pixelSubscriptionObj?pixelSubscriptionObj.data.id:null,
+              license_id:l.id,
+              license_purchase_date:new Date(),
+              license_duration:l.duration_in_days,
+              license_expiration_date:expirationDate,
+              withdrawal_amount_is_paid:0,
+              has_expired:0,
+              nolu_reward_amount:0,
+              usdt_reward_amount:0,
+            }
+  
+       purchaseLicense(licensePurchaseObj);
+     
+      }else{
+        toast.error(`🦄 You Must Purchase ${currentActivePixel.name} Pixel first`, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          });
+      }
+    } else {
+      toast.error('🦄 Purchase unsuccessful', {
         position: "top-right",
         autoClose: 3000,
         hideProgressBar: false,
@@ -215,6 +225,7 @@ const Pixels = () => {
         progress: undefined,
         });
     }
+    
   }
 
    function purchaseLicense(licensePurchaseObj){
@@ -226,9 +237,9 @@ const Pixels = () => {
       
       if(data.success){
         setPixelPurchased(false)
-        toast.success(`🦄 Successfully  ${currentActivePixel.name} purchased!`, {
+        toast.success(`🦄 Successfully  License purchased!`, {
           position: "top-right",
-          autoClose: 600,
+          autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
@@ -236,10 +247,10 @@ const Pixels = () => {
           progress: undefined,
           });
 
-          setTimeout(() => {
-            let reload=window.location.reload()
-            alert(reload)
-          }, 1000);
+          // setTimeout(() => {
+          //   window.location.reload()
+           
+          // }, 6000);
 
 
       }else{
@@ -258,7 +269,24 @@ window.scrollTo({ top: 600, behavior: "smooth" });
       }
 })
    }
+
+
+   function getUserSubscriptionsById(userInfo){
+    GetUserSubscriptionsByIdService(userInfo,pageNum).then(data => {
+      console.log("getUserSubscriptionsById")
+      console.log(data?data.data.data:[])
+      setUserSubscriptions(data?data.data.data:[])
+    })
+   }
    
+
+  
+   const setPaginationValue = (index) => { // the callback. Use a better name
+    console.log("index");
+    console.log(index);
+    setPageNum(index+1);
+    getUserSubscriptionsById(userInfo)
+  };
   return (
     <>
       <Header />
@@ -279,6 +307,32 @@ window.scrollTo({ top: 600, behavior: "smooth" });
         </div>
         <ModalBody>Confirm Purchase <strong>{currentActivePixel?currentActivePixel.name:''}</strong> ?
         <p><strong>${currentActivePixel?currentActivePixel.price:''}</strong> will be duducted from your account.</p>
+        
+        {/* wallet input text box starts */}
+        <Form role="form" onSubmit={(e) => { handleSubmit(e)}}>
+              <FormGroup>
+                <InputGroup className="input-group-alternative">
+                  <InputGroupAddon addonType="prepend">
+                    <InputGroupText>
+                      <i className="ni ni-lock-circle-open" />
+                    </InputGroupText>
+                  </InputGroupAddon>
+                  <Input
+                    placeholder="Wallet Address"
+                    type="text"
+                    name="wallet_address"
+                    
+                  
+                  />
+                </InputGroup>
+              </FormGroup>
+              
+            </Form>
+        {/* wallet input text box ends*/}
+
+
+
+
         </ModalBody>
         <ModalFooter>
           <Button
@@ -445,91 +499,11 @@ confirmLicensePurchase(l)
               </CardBody>
             </Card>
           </div>
+          {/* <th scope="col">Type</th>  */}
+          <MyPixelsTable tableColums={['Serial','Pixel','Creation Date','License Timer','Nolu rewards','USDT Rewards','Claim Reward']}  tableData={userSubscriptions?userSubscriptions:[]} pageNum={setPaginationValue} />
         </Row>
 
-       
-        <Row className="mt-5">
-          <Col className="mb-5 mb-xl-0" xl="10" sm="12">
-            <Card className="shadow">
-              <CardHeader className="border-0">
-                <Row className="align-items-center">
-                  <div className="col">
-                    <h3 className="mb-0">My Pixels (5)</h3>
-                  </div>
-                  <div className="col text-right">
-                    <Button
-                      color="primary"
-                      href="#pablo"
-                      onClick={(e) => e.preventDefault()}
-                      size="sm"
-                    >
-                      See all
-                    </Button>
-                  </div>
-                </Row>
-              </CardHeader>
-              <Table className="align-items-center table-flush" responsive>
-                <thead className="thead-light">
-                  <tr>
-                    <th scope="col">Serial</th>
-                    <th scope="col">Type</th>
-                    <th scope="col">Creation Date</th>
-                    <th scope="col">License Timer</th>
-                    <th scope="col">Nolu rewards</th>
-                    <th scope="col">USDT Rewards</th>
-                    <th scope="col">Claim</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row">/argon/</th>
-                    <td>4,569</td>
-                    <td>340</td>
-                    <td>
-                      <i className="fas fa-arrow-up text-success mr-3" /> 46,53%
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">/argon/index.html</th>
-                    <td>3,985</td>
-                    <td>319</td>
-                    <td>
-                      <i className="fas fa-arrow-down text-warning mr-3" />{" "}
-                      46,53%
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">/argon/charts.html</th>
-                    <td>3,513</td>
-                    <td>294</td>
-                    <td>
-                      <i className="fas fa-arrow-down text-warning mr-3" />{" "}
-                      36,49%
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">/argon/tables.html</th>
-                    <td>2,050</td>
-                    <td>147</td>
-                    <td>
-                      <i className="fas fa-arrow-up text-success mr-3" /> 50,87%
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">/argon/profile.html</th>
-                    <td>1,795</td>
-                    <td>190</td>
-                    <td>
-                      <i className="fas fa-arrow-down text-danger mr-3" />{" "}
-                      46,53%
-                    </td>
-                  </tr>
-                </tbody>
-              </Table>
-            </Card>
-          </Col>
-          
-        </Row>
+      
         <ToastContainer
                       position="top-right"
                       autoClose={500}
