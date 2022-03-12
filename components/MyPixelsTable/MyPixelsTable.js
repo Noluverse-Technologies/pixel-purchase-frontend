@@ -60,7 +60,7 @@ const returnNoData = () => {
               
               <Link href="/admin/allpixels">
                 <a className="small  mb-0 ml-3 text-primary text-lowercase d-none d-lg-inline-block">
-                see all
+                see all 
                 </a>
                 
             </Link>
