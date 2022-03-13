@@ -62,7 +62,6 @@ const returnNoData = () => {
                 <a className="small  mb-0 ml-3 text-primary text-lowercase d-none d-lg-inline-block">
                 see all 
                 </a>
-                
             </Link>
               </h3>
           

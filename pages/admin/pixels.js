@@ -134,7 +134,7 @@ const Pixels = () => {
     let subscriptionObj={
       pixel_id:currentActivePixel.id,
       user_id:userInfo.id,
-      subsctiption_type:userInfo.user_type,
+      subscription_type:userInfo.user_type,
       withdrawal_amount_is_paid:"0",
       pixel_purchase_date:new Date(),
     }
