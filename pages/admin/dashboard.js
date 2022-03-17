@@ -5,7 +5,8 @@ import classnames from "classnames";
 import Chart from "chart.js";
 // react plugin used to create charts
 import { Line, Bar, Pie } from "react-chartjs-2";
-
+import CryptoWallet from "../../components/CryptoWallet/CryptoWallet";
+import contract from "../../components/Contracts/SmartContract.json";
 // reactstrap components
 import {
   Button,
@@ -33,7 +34,8 @@ import {
 } from "variables/charts.js";
 
 import Header from "components/Headers/Header.js";
-
+const ContractAddress = "0x355638a4eCcb777794257f22f50c289d4189F245";
+const abi = contract.abi;
 
 const Dashboard = (props) => {
   const [activeNav, setActiveNav] = React.useState(1);
@@ -69,6 +71,7 @@ const Dashboard = (props) => {
   return (
     <>
       <Header />
+      
       {/* Page content */}
       <Container className="mt--7" fluid>
         <Row>
@@ -78,7 +81,8 @@ const Dashboard = (props) => {
                 <Row className="align-items-center">
                   <div className="col">
                     <h6 className="text-uppercase text-light ls-1 mb-1">
-                      Overview
+                      Overview 
+                      <CryptoWallet Contract={contract} ContractAddress={ContractAddress} abi={abi}></CryptoWallet>
                     </h6>
                     <h2 className="text-white mb-0">Sales value</h2>
                   </div>
@@ -294,7 +298,7 @@ const Dashboard = (props) => {
               <CardHeader className="border-0">
                 <Row className="align-items-center">
                   <div className="col">
-                    <h3 className="mb-0">Page visits</h3>
+                    <h3 className="mb-0">Transaction History</h3>
                   </div>
                   <div className="col text-right">
                     <Button

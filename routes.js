@@ -12,7 +12,7 @@ var routes = [
     layout: "/admin",
   },
   {
-    path: "/tables",
+    path: "/transactions",
     name: "Transactions",
     icon: "ni ni-bullet-list-67 text-red",
     layout: "/admin",

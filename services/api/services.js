@@ -163,3 +163,27 @@ export function GetAllUserSubscriptionsByUser(userObj){
         console.log(err);
     })
 }
+
+
+export function GetUserTransactionsByMonthService(transactionObj){
+
+    let authToken=localStorage.getItem("authToken");
+    return axios({
+        method: "get",
+        url: baseUrl+"transactions/view_by_month",
+        params: transactionObj,
+        headers: {
+            "Authorization" : `Bearer ${authToken}`,
+            "Content-type": "application/json"
+        }
+      })
+    .then(res=>{
+        return res.data;
+    })
+    .catch(err=>{
+        console.log(err);
+    })
+}
+
+
+

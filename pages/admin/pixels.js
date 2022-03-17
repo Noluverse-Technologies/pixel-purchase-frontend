@@ -63,6 +63,8 @@ const Pixels = () => {
      
    }, []);
 
+  
+
   useEffect(() => {
  
 
@@ -273,8 +275,7 @@ window.scrollTo({ top: 600, behavior: "smooth" });
 
    function getUserSubscriptionsById(userInfo){
     GetUserSubscriptionsByIdService(userInfo,pageNum).then(data => {
-      console.log("getUserSubscriptionsById")
-      console.log(data?data.data.data:[])
+     
       setUserSubscriptions(data?data.data.data:[])
     })
    }
