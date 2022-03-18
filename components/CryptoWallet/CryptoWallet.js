@@ -11,31 +11,38 @@ import { Container, Row, Col, Nav, NavItem, NavLink,Button } from "reactstrap";
 function CryptoWallet({Contract, ContractAddress, abi}) {
 
     const [currentAccount, setCurrentAccount] = useState(null);
+    const [isDisabled, setIsDisabled] = useState(false);
     
     const checkWalletIsConnected = () => { 
-        const wallet = window;
+        const wallet = window.ethereum;
+        console.log("window object")
+        console.log(window.ethereum)
 
         if(!wallet){
-           
+          
+    swal({
+        title: "Wallet not connected?",
+        text: "Please install wallet to proceed!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+        showCancelButton: false,      
+        confirmButtonColor: "#DD6B55",
+      })
 
-            swal({
-                title: "Wallet not connected?",
-                text: "Please install wallet to proceed!",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true,
-                showCancelButton: false,      
-                confirmButtonColor: "#DD6B55",
-              })
-        }else{
             
-
+        }else{
+            setIsDisabled(true);
+            let walletConnected=localStorage.getItem('walletConnected'); 
+        if(!walletConnected){
             swal({
                 title: "Wallet extension found?",
                 text: "Wallet browser extension found! You are good to go!",
                 icon: "success",
                 dangerMode: false,
               })
+          } 
+          localStorage.setItem('walletConnected', true);   
         }
     }
 
@@ -48,7 +55,15 @@ function CryptoWallet({Contract, ContractAddress, abi}) {
         const { ethereum } = window;
 
         if(!ethereum) {
-            alert("Wallet is not installed");
+            swal({
+                title: "Install the wallet extension",
+                text: "Please install wallet to proceed!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+                showCancelButton: false,      
+                confirmButtonColor: "#DD6B55",
+              })
         }
 
         try{
@@ -62,7 +77,12 @@ function CryptoWallet({Contract, ContractAddress, abi}) {
 
   return (
    <>
-   <Button onClick={connectWalletHandler}  className="btn btn-success float-right ">Connect Wallet</Button>
+   {/* {typeof window.ethereum == 'undefined' &&  */}
+   <Button onClick={connectWalletHandler}  className="btn btn-success float-right " >Connect Wallet</Button>
+{/* } */}
+   {/* {typeof window.ethereum != 'undefined' && 
+   <Button onClick={connectWalletHandler} disabled={isDisabled}  className="btn btn-success float-right " >Wallet connected</Button>
+} */}
    </>
   );
 }

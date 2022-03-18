@@ -30,11 +30,17 @@ var routes = [
   //   layout: "/admin",
   // },
    {
-    path: "/maps",
+    path: "/noluplus",
     name: "Nolu +",
     icon: "ni ni-pin-3 text-orange",
     layout: "/admin",
   },
+  //  {
+  //   path: "/maps",
+  //   name: "Nolu +",
+  //   icon: "ni ni-pin-3 text-orange",
+  //   layout: "/admin",
+  // },
 
   // {
   //   path: "/login",

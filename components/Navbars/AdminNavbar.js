@@ -132,6 +132,8 @@ function getUserInfo(){
                 <DropdownItem href="#pablo" onClick={(e) => {e.preventDefault()
               if(typeof window !=='undefined') {
                 localStorage.removeItem("authToken");
+                localStorage.removeItem("walletConnected");
+                localStorage.removeItem("isLoggedin");
                 window.location.href = "/";
               }
               }
