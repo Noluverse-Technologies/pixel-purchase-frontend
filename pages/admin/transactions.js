@@ -14,6 +14,7 @@ import {
   Container,
   Row,
   Dropdown,
+  Col,
 } from "reactstrap";
 // layout for this page
 import Admin from "layouts/Admin.js";
@@ -25,12 +26,14 @@ import {GetUserTransactionsByMonthService} from "../../services/api/services";
 function Tables() {
   Moment.locale('en');
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const columns=["entry", "product name", "date of purchase", "total price"]
+  const columns=["entry", "product name", "date of purchase", `total price($)`]
   //get current month
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth()+1);
   const [selectedItem, setSelectedItem] = useState(null);
   const [userInfo, setUserInfo] = useState(null);
   const [tableData, setTableData] = useState([]);
+  const [totalCredits, setTotalCredits] = useState(0);
+  const [totalDebits, setTotalDebits] = useState(0);
  
   
   useEffect(() => {
@@ -42,8 +45,7 @@ function Tables() {
   function getUserInfo(){
 
     GetCurrentUserInfo().then(data => {
-       console.log("into user information from transaction");
-       console.log(data);
+
        setUserInfo(data.data[0])
        
      }).catch(err => {
@@ -67,16 +69,27 @@ function Tables() {
      if(item.is_reward_claimed){
         return "Reward Claimed";
      }
+
+     if(item.nolu_plus_subscription_id){
+        return "Nolu Plus Subscription";
+     }
    }
 
    function getPrice(item){
+     let totaldebits=0;
+     let totalCredits=0
      
      if(item.pixel_id){
-       let pprice=item.pixel_price;
+       let pprice=item.pixel_amount;
+       if(pprice<0){
+         totalCredits=totalCredits+pprice;
+       }
+       
        return pprice;
      }
      if(item.license_id){
-       let lprice=item.license_price;
+       let lprice=item.license_amount;
+       
        return lprice;
      }
 
@@ -88,6 +101,12 @@ function Tables() {
      if(item.is_reward_claimed){
         let rprice=item.reward_amount;
         return rprice;
+     }
+     if(item.nolu_plus_subscription_id){
+
+        let npprice=item.has_nolu_plus_subscription.has_nolu_plus_package.price;
+        
+        return npprice ;
      }
    }
 
@@ -106,23 +125,30 @@ function Tables() {
      if(item.is_reward_claimed){
         return "Reward Claimed";
      }
+     if(item.nolu_plus_subscription_id){
+        return item.has_nolu_plus_subscription.has_nolu_plus_package.name;
+     }
    }
 
    function getTransactionDate(item){
-    return Moment(item.date).format('d MMM, h:mm a');
+     console.log("here is item date");
+     console.log(item.date);
+    return Moment(item.date).format('DD MMM YYYY, h:mm a');
    }
 
   function GetUserTransactionsByMonth(){
-
+ 
     let transactionObj={
-      user_id:1,
-      month:currentMonth,
+      user_id:userInfo?userInfo.id:null,
+      month:currentMonth
     }
 
     GetUserTransactionsByMonthService(transactionObj).then(data => {
        console.log("all user transactions");
        console.log(data.data);
-       setTableData(data.data)
+       setTableData(data.data[0])
+       setTotalCredits(data.data.total_credits);
+       setTotalDebits(data.data.total_debits);
        
      }).catch(err => {
        console.log("error found") 
@@ -132,11 +158,9 @@ function Tables() {
 
 
   useEffect(() => {
-    console.log("currentMonth change triggered");
-    console.log(currentMonth);
     GetUserTransactionsByMonth();
 
-  },[currentMonth]);
+  },[currentMonth,userInfo]);
 
 
   const months=[
@@ -166,11 +190,10 @@ function Tables() {
   return monthVal;
   }
  
+ 
 
 
   const toggle = () => setDropdownOpen(prevState => !prevState);
-
-  
 
   return (
     <>
@@ -214,25 +237,7 @@ function Tables() {
                 </thead>
                 <tbody>
                   
-                    {/* <th scope="row">
-                      <Media className="align-items-center">
-                        <a
-                          className="avatar rounded-circle mr-3"
-                          href="#pablo"
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          <img
-                            alt="..."
-                            src={require("assets/img/theme/bootstrap.jpg")}
-                          />
-                        </a>
-                        <Media>
-                          <span className="mb-0 text-sm">
-                            Pixel
-                          </span>
-                        </Media>
-                      </Media>
-                    </th> */}
+                   
 
                     {
                       tableData?tableData.map((item,index)=>{
@@ -241,17 +246,47 @@ function Tables() {
                           <td key={"entry"+index}>{getType(item)}</td>
                           <td key={"name"+index}>{getItemPurchased(item)}</td>
                           <td key={"date"+index}>{getTransactionDate(item)}</td>
-                          <td key={"price"+index}>{"hello"}</td>
+                          <td key={"price"+index}><h4 className={ getPrice(item) > 0? "ml-0 text-success":"ml-0 text-danger"}>{`${getPrice(item)}`}</h4></td>
                           
                           </tr>
                         )
                       })
                       :null
                     }
-                   
+
                 
                 </tbody>
               </Table>
+              
+            </Card>
+
+            <Card className="shadow mt-4">
+              <Row className="offset-2 mt-2">
+                      <Col lg="4" md="4" >
+                      <h3 className="text-muted">Total Credits</h3>
+                      </Col>
+                   
+                      <Col lg="4" md="4" >
+                      <h3 className="text-muted">Total Debits</h3>
+                      </Col>
+                    
+                      <Col lg="4" md="4" >
+                      Download Statistics
+                      </Col>
+                </Row>
+              <Row className="offset-2 mt-1">
+                      <Col lg="4" md="4" className="ml-4" >
+                      <h3 className="text-danger">{totalCredits}</h3>
+                      </Col>
+                   
+                      <Col lg="4" md="4" >
+                      <h3 className="text-success">{totalDebits}</h3>
+                      </Col>
+                    
+                      <Col lg="4" md="4" >
+
+                      </Col>
+                </Row>
             </Card>
           </div>
         </Row>

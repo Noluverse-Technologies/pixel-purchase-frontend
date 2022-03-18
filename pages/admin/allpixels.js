@@ -139,8 +139,8 @@ function AllPixels() {
                 
             </Link>
        </td>
-        <td>{Moment(td.pixel_purchase_date).format('d MMM Y')}</td>
-        <td>{td.license_purchase_date?Moment(td.license_purchase_date).format('d MMM Y'):"N/A"}</td>
+        <td>{Moment(td.pixel_purchase_date).format('DD MMM YYYY')}</td>
+        <td>{td.license_purchase_date?Moment(td.license_purchase_date).format('DD MMM YYYY'):"N/A"}</td>
         <td>{td.license_purchase_date?td.nolu_reward_amount:"N/A"}</td>
         <td>{td.license_purchase_date?td.usdt_reward_amount:"N/A"}</td>
         <td>
