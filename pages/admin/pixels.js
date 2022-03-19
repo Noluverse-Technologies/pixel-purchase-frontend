@@ -2,6 +2,7 @@ import React, { useState,useEffect,Fragment } from "react";
 import {GetPixelPackagesService} from "../../services/api/services";
 import {GetLicensePackagesService} from "../../services/api/services";
 import { ToastContainer, toast } from 'react-toastify';
+import Events from "../../components/Events/Events";
 import 'react-toastify/dist/ReactToastify.css';
 // reactstrap components
 import {
@@ -37,6 +38,7 @@ import {GetCurrentUserInfo} from "../../services/api/services";
 import {CreateUserSubscriptionService} from "../../services/api/services";
 import {purchaseLicenseService} from "../../services/api/services";
 import {GetUserSubscriptionsByIdService} from "../../services/api/services";
+import {GetEventsService} from "../../services/api/services";
 
 
 const Pixels = () => {
@@ -50,6 +52,7 @@ const Pixels = () => {
   const [pixelPurchased, setPixelPurchased] = useState(false);
   const [pixelSubscriptionObj, setPixelSubscriptionObj] = useState(null);
   const [userSubscriptions, setUserSubscriptions] = useState(null);
+  const [eventsData, setEventsData] = useState([]);
   const [pageNum, setPageNum] = useState(1);
 
   useEffect(() => {
@@ -58,8 +61,9 @@ const Pixels = () => {
     GetPixelPackages(); 
     GetLicensePackages();
     getUserInfo();
-
+    
     getUserSubscriptionsById(userInfo?userInfo:[])
+    getEvents();
      
    }, []);
 
@@ -67,7 +71,6 @@ const Pixels = () => {
 
   useEffect(() => {
  
-
     getUserSubscriptionsById(userInfo?userInfo:[])
      
    }, [userInfo]);
@@ -91,6 +94,21 @@ const Pixels = () => {
         console.log(data.data.length)
    
         setPixelData(data.data)
+        
+      }).catch(err => {
+        console.log("error found") 
+      });
+    
+    }
+
+   //get events data
+   function getEvents(){
+ 
+    GetEventsService().then(data => {
+        console.log("getting event data")
+        console.log(data.data)
+   
+        setEventsData(data.data)
         
       }).catch(err => {
         console.log("error found") 
@@ -419,18 +437,7 @@ window.scrollTo({ top: 600, behavior: "smooth" });
             </Card>
           </div>
           <div className="col-12 col-md-4">
-            <Card className="shadow">
-              <CardHeader className="bg-transparent">
-                <h3 className="mb-0">Events</h3>
-              </CardHeader>
-              <CardBody>
-                <Row className="icon-examples">
-                  <Col lg="12" md="12">
-                 Events will appear here
-                  </Col>
-                </Row>
-              </CardBody>
-            </Card>
+          <Events eventData={eventsData?eventsData:[]}></Events>
           </div>
           
         </Row>

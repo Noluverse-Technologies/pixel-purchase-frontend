@@ -81,9 +81,9 @@ function Tables() {
      
      if(item.pixel_id){
        let pprice=item.pixel_amount;
-       if(pprice<0){
-         totalCredits=totalCredits+pprice;
-       }
+      //  if(pprice<0){
+      //    totalCredits=totalCredits+pprice;
+      //  }
        
        return pprice;
      }
@@ -104,7 +104,7 @@ function Tables() {
      }
      if(item.nolu_plus_subscription_id){
 
-        let npprice=item.has_nolu_plus_subscription.has_nolu_plus_package.price;
+        let npprice=item.has_nolu_plus_subscription?item.has_nolu_plus_subscription.has_nolu_plus_package.price:"ERROR";
         
         return npprice ;
      }
@@ -126,7 +126,7 @@ function Tables() {
         return "Reward Claimed";
      }
      if(item.nolu_plus_subscription_id){
-        return item.has_nolu_plus_subscription.has_nolu_plus_package.name;
+        return item.has_nolu_plus_subscription?item.has_nolu_plus_subscription.has_nolu_plus_package.name:"error occured";
      }
    }
 

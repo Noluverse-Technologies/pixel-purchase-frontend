@@ -115,6 +115,8 @@ export function CreateUserSubscriptionService(subscriptionObj){
         console.log(err);
     })
 }
+
+
 export function purchaseLicenseService(licenseObject){
     let authToken=localStorage.getItem("authToken");
     return axios({
@@ -184,6 +186,88 @@ export function GetUserTransactionsByMonthService(transactionObj){
         console.log(err);
     })
 }
+
+
+export function GetNoluPlusPackageByIdService($id){
+
+    let authToken=localStorage.getItem("authToken");
+    return axios({
+        method: "get",
+        url: baseUrl+"noluplus/package/view",
+        params: $id,
+        headers: {
+            "Authorization" : `Bearer ${authToken}`,
+            "Content-type": "application/json"
+        }
+      })
+    .then(res=>{
+        return res.data;
+    })
+    .catch(err=>{
+        console.log(err);
+    })
+}
+
+export function getAllNoluPlusSubscriptionsByUser($user_id){
+
+    let authToken=localStorage.getItem("authToken");
+    return axios({
+        method: "get",
+        url: baseUrl+"subscribe/view_all_nolu_plus_subscription",
+        params: $user_id,
+        headers: {
+            "Authorization" : `Bearer ${authToken}`,
+            "Content-type": "application/json"
+        }
+      })
+    .then(res=>{
+        return res.data;
+    })
+    .catch(err=>{
+        console.log(err);
+    })
+}
+
+
+
+//get the list of pixel packages
+export function GetEventsService(){
+    let authToken=localStorage.getItem("authToken");
+    return  axios.get(baseUrl+"events/view", { headers: {"Authorization" : `Bearer ${authToken}`} })
+    .then(res=>{
+        console.log("here is events data")
+        console.log(res.data.data[0])
+        return res.data;
+    })
+    .catch(err=>{
+        console.log(err);
+    })
+}
+
+
+
+
+//create user subscription
+export function CreateNoluPlusSubscriptionService(subscriptionObject){
+    let authToken=localStorage.getItem("authToken");
+    return axios({
+        method: "post",
+        url: baseUrl+"subscribe/create_nolu_plus",
+        data: subscriptionObject,
+        headers: {
+            "Authorization" : `Bearer ${authToken}`,
+            "Content-type": "application/json"
+        }
+      })
+    .then(res=>{
+        return res.data;
+    })
+    .catch(err=>{
+        console.log(err);
+    })
+}
+
+
 
 
 
