@@ -1,8 +1,8 @@
 import React, { useState,useEffect } from "react";
-// reactstrap components
+// reactstrap Components
 import { Container, Row, Col } from "reactstrap";
 
-// core components
+// core Components
 import AuthNavbar from "../Components/Navbars/AuthNavbar";
 import AuthFooter from "../Components/Footers/AuthFooter";
 
