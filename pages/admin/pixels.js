@@ -508,7 +508,7 @@ confirmLicensePurchase(l)
             </Card>
           </div>
           {/* <th scope="col">Type</th>  */}
-          <MyPixelsTable tableColums={['Serial','Pixel','Creation Date','License Timer','Nolu rewards','USDT Rewards']}  tableData={userSubscriptions?userSubscriptions:[]} pageNum={setPaginationValue} />
+          <MyPixelsTable tableColums={['Serial','Pixel','Creation Date','License Timer','Nolu rewards','USDT Rewards']} key={1}  tableData={userSubscriptions?userSubscriptions:[]} pageNum={setPaginationValue} />
         </Row>
 
       
