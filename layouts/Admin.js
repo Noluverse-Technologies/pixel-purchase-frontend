@@ -9,7 +9,7 @@ import Sidebar from "components/Sidebar/Sidebar.js";
 // authProtection
 
 import routes from "routes.js";
-import AuthProtection from "../components/Auth/AuthProtection";
+import AuthProtection from "../Components/Auth/AuthProtection";
 
 function Admin(props) {
   // used for checking current route

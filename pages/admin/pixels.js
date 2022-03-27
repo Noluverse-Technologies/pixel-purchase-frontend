@@ -2,7 +2,7 @@ import React, { useState,useEffect,Fragment } from "react";
 import {GetPixelPackagesService} from "../../services/api/services";
 import {GetLicensePackagesService} from "../../services/api/services";
 import { ToastContainer, toast } from 'react-toastify';
-import Events from "../../components/Events/Events";
+import Events from "../../Components/Events/Events";
 import 'react-toastify/dist/ReactToastify.css';
 // reactstrap components
 import {
@@ -21,7 +21,7 @@ import {
   InputGroup
 } from "reactstrap";
 
-import MyPixelsTable from "../../components/MyPixelsTable/MyPixelsTable";
+import MyPixelsTable from "../../Components/MyPixelsTable/MyPixelsTable";
 
 // reactstrap components
 import {
