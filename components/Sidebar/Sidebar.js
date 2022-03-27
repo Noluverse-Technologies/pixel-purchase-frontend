@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 // nodejs library to set properties for components
 import { PropTypes } from "prop-types";
-import authProtection from "../Auth/AuthProtection";
+import AuthProtection from "../Auth/AuthProtection";
 
 // reactstrap components
 import {
@@ -304,4 +304,4 @@ Sidebar.propTypes = {
   }),
 };
 
-export default authProtection(Sidebar);
+export default AuthProtection(Sidebar);

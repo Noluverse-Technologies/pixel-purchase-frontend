@@ -9,7 +9,7 @@ import Sidebar from "components/Sidebar/Sidebar.js";
 // authProtection
 
 import routes from "routes.js";
-import authProtection from "../components/Auth/AuthProtection";
+import AuthProtection from "../components/Auth/AuthProtection";
 
 function Admin(props) {
   // used for checking current route
@@ -50,4 +50,4 @@ function Admin(props) {
   );
 }
 
-export default authProtection(Admin);
+export default AuthProtection(Admin);

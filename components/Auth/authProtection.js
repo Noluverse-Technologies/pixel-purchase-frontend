@@ -1,7 +1,7 @@
-import router, { useRouter } from "next/router";
-import { useState } from "react";
+import { useRouter } from "next/router";
 
-const authProtection = (WrappedComponent) => {
+
+const AuthProtection = (WrappedComponent) => {
 
   return (props) => {
 
@@ -33,4 +33,4 @@ const authProtection = (WrappedComponent) => {
   };
 };
 
-export default authProtection;
+export default AuthProtection;
