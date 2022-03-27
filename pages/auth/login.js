@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import LoginService from "../../services/api/services";
 
 
-// reactstrap components
+// reactstrap Components
 import {
   Button,
   Card,
@@ -19,7 +19,7 @@ import {
 } from "reactstrap";
 // layout for this page
 import Auth from "layouts/Auth.js";
-import Message from "../../components/CustomMessage/Message";
+import Message from "../../Components/CustomMessage/Message";
 import { useRouter } from "next/router";
 
 function Login() {

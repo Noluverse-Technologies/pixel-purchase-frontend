@@ -4,7 +4,7 @@ import Link from "next/link";
 import {GetCurrentUserInfo} from "../../services/api/services";
 import { useRouter } from "next/router";
 import { rootUrl } from "../../variables/config";
-// reactstrap components
+// reactstrap Components
 import {
   DropdownMenu,
   DropdownItem,

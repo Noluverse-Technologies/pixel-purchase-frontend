@@ -3,7 +3,7 @@ import {UserRegistration} from "../../services/api/services";
 // import { Spinner } from "reactstrap";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-// reactstrap components
+// reactstrap Components
 import {
   Button,
   Card,

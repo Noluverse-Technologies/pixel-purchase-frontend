@@ -1,6 +1,6 @@
 import React, { useEffect,useState } from "react";
 import {GetCurrentUserInfo} from "../../services/api/services";
-// reactstrap components
+// reactstrap Components
 import { Button, Container, Row, Col } from "reactstrap";
 import { useRouter } from "next/router";
 

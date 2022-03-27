@@ -1,6 +1,6 @@
 import React from "react";
 
-// reactstrap components
+// reactstrap Components
 import { Card, CardBody,  CardHeader } from "reactstrap";
 
 function Events({eventData}) {

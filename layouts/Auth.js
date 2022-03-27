@@ -1,10 +1,10 @@
 import React, { useState,useEffect } from "react";
-// reactstrap components
+// reactstrap Components
 import { Container, Row, Col } from "reactstrap";
 
-// core components
-import AuthNavbar from "components/Navbars/AuthNavbar.js";
-import AuthFooter from "components/Footers/AuthFooter.js";
+// core Components
+import AuthNavbar from "Components/Navbars/AuthNavbar.js";
+import AuthFooter from "Components/Footers/AuthFooter.js";
 
 
 

@@ -1,9 +1,9 @@
 import React from "react";
 
-// reactstrap components
+// reactstrap Components
 import { Spinner } from "reactstrap";
 
-// core components
+// core Components
 
 export default function PageChange(props) {
   return (

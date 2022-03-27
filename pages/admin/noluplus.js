@@ -1,7 +1,7 @@
 // layout for this page
 import Admin from "layouts/Admin.js";
-// core components
-import Header from "components/Headers/Header.js";
+// core Components
+import Header from "Components/Headers/Header.js";
 
  /*eslint-disable*/
  import React, { useEffect,useState } from "react";
@@ -20,7 +20,7 @@ import Header from "components/Headers/Header.js";
      FormGroup,
      Form
  } from "reactstrap";
- // reactstrap components
+ // reactstrap Components
  import { Container, Row, Col} from "reactstrap";
  
  import {CreateNoluPlusSubscriptionService} from "../../services/api/services";

@@ -4,7 +4,7 @@ import {GetLicensePackagesService} from "../../services/api/services";
 import { ToastContainer, toast } from 'react-toastify';
 // import Events from "../../Components/Events/Events";
 import 'react-toastify/dist/ReactToastify.css';
-// reactstrap components
+// reactstrap Components
 import {
   Card,
   CardHeader,
@@ -23,7 +23,7 @@ import {
 
 import MyPixelsTable from "../../Components/MyPixelsTable/MyPixelsTable";
 
-// reactstrap components
+// reactstrap Components
 import {
   Button,
   Modal, 
@@ -32,8 +32,8 @@ import {
 } from "reactstrap";  
 // layout for this page
 import Admin from "layouts/Admin.js";
-// core components
-import Header from "components/Headers/Header.js";
+// core Components
+import Header from "Components/Headers/Header.js";
 import {GetCurrentUserInfo} from "../../services/api/services";
 import {CreateUserSubscriptionService} from "../../services/api/services";
 import {purchaseLicenseService} from "../../services/api/services";

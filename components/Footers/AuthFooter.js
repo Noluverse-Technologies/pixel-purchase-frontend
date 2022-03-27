@@ -1,7 +1,7 @@
 /*eslint-disable*/
 import React from "react";
 
-// reactstrap components
+// reactstrap Components
 import { NavItem, NavLink, Nav, Container, Row, Col } from "reactstrap";
 
 function Login() {

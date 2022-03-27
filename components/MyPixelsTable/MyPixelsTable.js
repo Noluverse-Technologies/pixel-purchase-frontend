@@ -15,7 +15,7 @@ import {
     CardBody
 
 } from "reactstrap";
-// reactstrap components
+// reactstrap Components
 import { Container, Row, Col, Nav, NavItem, NavLink } from "reactstrap";
 
 function MyPixelsTable({tableColums,tableData,pageNum}) {

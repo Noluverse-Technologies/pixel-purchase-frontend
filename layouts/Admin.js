@@ -1,11 +1,11 @@
 import React from "react";
 import { useRouter } from "next/router";
-// reactstrap components
+// reactstrap Components
 import { Container } from "reactstrap";
-// core components
-import AdminNavbar from "components/Navbars/AdminNavbar.js";
-import AdminFooter from "components/Footers/AdminFooter.js";
-import Sidebar from "components/Sidebar/Sidebar.js";
+// core Components
+import AdminNavbar from "Components/Navbars/AdminNavbar.js";
+import AdminFooter from "Components/Footers/AdminFooter.js";
+import Sidebar from "Components/Sidebar/Sidebar.js";
 // authProtection
 
 import routes from "routes.js";

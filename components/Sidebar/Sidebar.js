@@ -2,11 +2,11 @@
 import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-// nodejs library to set properties for components
+// nodejs library to set properties for Components
 import { PropTypes } from "prop-types";
 import AuthProtection from "../Auth/AuthProtection";
 
-// reactstrap components
+// reactstrap Components
 import {
   Button,
   Card,

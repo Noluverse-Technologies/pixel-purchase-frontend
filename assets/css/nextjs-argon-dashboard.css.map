@@ -113,7 +113,7 @@
 		"../scss/argon-dashboard/custom/utilities/_shadows.scss",
 		"../scss/argon-dashboard/custom/utilities/_text.scss",
 		"../scss/argon-dashboard/custom/utilities/_transform.scss",
-		"../scss/argon-dashboard/custom/_components.scss",
+		"../scss/argon-dashboard/custom/_Components.scss",
 		"../scss/argon-dashboard/custom/_alert.scss",
 		"../scss/argon-dashboard/custom/alerts/_alert.scss",
 		"../scss/argon-dashboard/custom/alerts/_alert-dismissible.scss",

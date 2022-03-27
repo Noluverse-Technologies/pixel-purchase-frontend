@@ -22,7 +22,7 @@
 @import "argon-dashboard/custom/variables";
 @import "argon-dashboard/custom/mixins";
 
-// bootstrap (4.3.1) components
+// bootstrap (4.3.1) Components
 
 @import "~bootstrap/scss/root";
 @import "~bootstrap/scss/reboot";
@@ -57,17 +57,17 @@
 @import "~bootstrap/scss/utilities";
 @import "~bootstrap/scss/print";
 
-// Argon utilities and components
+// Argon utilities and Components
 
 @import "argon-dashboard/custom/reboot";
 @import "argon-dashboard/custom/utilities";
-@import "argon-dashboard/custom/components";
+@import "argon-dashboard/custom/Components";
 
 // Vendor (Plugins)
 
 @import "argon-dashboard/custom/vendors";
 
-// Docs components
+// Docs Components
 
 @import "argon-dashboard/docs/variables";
 @import "argon-dashboard/docs/nav";

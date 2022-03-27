@@ -3,7 +3,7 @@ import {React, useEffect, useState} from "react";
 import swal from 'sweetalert';
 
 
-// reactstrap components
+// reactstrap Components
 import { Container, Row, Col, Nav, NavItem, NavLink,Button } from "reactstrap";
 
 

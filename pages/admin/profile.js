@@ -3,7 +3,7 @@ import React, { useEffect,useState } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-// reactstrap components
+// reactstrap Components
 import {
   Button,
   Card,
@@ -18,8 +18,8 @@ import {
 } from "reactstrap";
 // layout for this page
 import Admin from "layouts/Admin.js";
-// core components
-import UserHeader from "components/Headers/UserHeader.js";
+// core Components
+import UserHeader from "Components/Headers/UserHeader.js";
 import {GetCurrentUserInfo} from "../../services/api/services";
 import {UpdateUserInfo} from "../../services/api/services";
 import { useRouter } from "next/router";

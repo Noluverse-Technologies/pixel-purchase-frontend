@@ -1,6 +1,6 @@
 import React from "react";
 
-// reactstrap components
+// reactstrap Components
 import { Card, CardBody, CardTitle, Container, Row, Col } from "reactstrap";
 
 function Header() {

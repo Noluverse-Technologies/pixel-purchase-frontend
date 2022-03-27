@@ -1,11 +1,11 @@
 import React from "react";
 
-// reactstrap components
+// reactstrap Components
 import { Card, Container, Row } from "reactstrap";
 // layout for this page
 import Admin from "layouts/Admin.js";
-// core components
-import Header from "components/Headers/Header.js";
+// core Components
+import Header from "Components/Headers/Header.js";
 const MapWrapper = () => {
   const mapRef = React.useRef(null);
   React.useEffect(() => {

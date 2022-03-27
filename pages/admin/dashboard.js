@@ -5,9 +5,9 @@ import classnames from "classnames";
 import Chart from "chart.js";
 // react plugin used to create charts
 import { Line, Bar, Pie } from "react-chartjs-2";
-import CryptoWallet from "../../components/CryptoWallet/CryptoWallet";
-import contract from "../../components/Contracts/SmartContract.json";
-// reactstrap components
+import CryptoWallet from "../../Components/CryptoWallet/CryptoWallet";
+import contract from "../../Components/Contracts/SmartContract.json";
+// reactstrap Components
 import {
   Button,
   Card,
@@ -25,7 +25,7 @@ import {
 } from "reactstrap";
 // layout for this page
 import Admin from "layouts/Admin.js";
-// core components
+// core Components
 import {
   chartOptions,
   parseOptions,
@@ -33,7 +33,7 @@ import {
   chartExample2,
 } from "variables/charts.js";
 
-import Header from "components/Headers/Header.js";
+import Header from "Components/Headers/Header.js";
 const ContractAddress = "0x355638a4eCcb777794257f22f50c289d4189F245";
 const abi = contract.abi;
 
