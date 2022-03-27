@@ -116,24 +116,6 @@ const returnNoData = () => {
         <td>{td.license_purchase_date?Moment(td.license_purchase_date).format('DD MMM YYYY'):"N/A"}</td>
         <td>{td.license_purchase_date?td.nolu_reward_amount:"N/A"}</td>
         <td>{td.license_purchase_date?td.usdt_reward_amount:"N/A"}</td>
-        <td>
-        <div className="col text-right">
-              <Button
-              disabled={td.license_purchase_date?false:true}
-                color="warning"
-                href="#pablo"
-                onClick={(e) => {
-                    e.preventDefault()
-                    console.log("claim object")
-                    console.log(td)
-
-                }}
-                size="sm"
-              >
-               Claim 
-              </Button>
-            </div>
-        </td>
         </tr>
     );
     })}

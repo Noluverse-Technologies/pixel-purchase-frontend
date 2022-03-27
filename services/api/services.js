@@ -268,6 +268,31 @@ export function CreateNoluPlusSubscriptionService(subscriptionObject){
 }
 
 
+export function ClaimAllRewardService(claimObj){
+    let authToken=localStorage.getItem("authToken");
+    return axios({
+        method: "post",
+        url: baseUrl+"reward/claimall",
+        data: claimObj,
+        headers: {
+            "Authorization" : `Bearer ${authToken}`,
+            "Content-type": "application/json"
+        }
+      })
+    .then(data=>{
+        console.log("respose success");
+        console.log(data.data);
+        return data.data;
+    })
+    .catch(res=>{
+        console.log("error message")
+        console.error(res)
+        return res;
+        
+    })
+}
+
+
 
 
 

@@ -26,7 +26,7 @@ import {GetUserTransactionsByMonthService} from "../../services/api/services";
 function Tables() {
   Moment.locale('en');
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const columns=["entry", "product name", "date of purchase", `total price($)`]
+  const columns=["entry", "product name", "date of Transaction", `total price($)`]
   //get current month
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth()+1);
   const [selectedItem, setSelectedItem] = useState(null);
@@ -81,10 +81,6 @@ function Tables() {
      
      if(item.pixel_id){
        let pprice=item.pixel_amount;
-      //  if(pprice<0){
-      //    totalCredits=totalCredits+pprice;
-      //  }
-       
        return pprice;
      }
      if(item.license_id){
@@ -94,12 +90,12 @@ function Tables() {
      }
 
      if(item.is_withdrawal_amount_paid){
-        let wprice=item.withdrawal_amount;
+        let wprice=item.withdrawal_fee_amount;
         return wprice;
      }
 
      if(item.is_reward_claimed){
-        let rprice=item.reward_amount;
+        let rprice=item.reward_claimed_amount;
         return rprice;
      }
      if(item.nolu_plus_subscription_id){
@@ -280,7 +276,7 @@ function Tables() {
                       </Col>
                    
                       <Col lg="4" md="4" >
-                      <h3 className="text-success">{totalDebits}</h3>
+                      <h3 className="text-success">{totalDebits.toFixed(2)}</h3>
                       </Col>
                     
                       <Col lg="4" md="4" >

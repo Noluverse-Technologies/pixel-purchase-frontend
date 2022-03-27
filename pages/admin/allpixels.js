@@ -19,31 +19,74 @@ import Header from "components/Headers/Header.js";
      FormGroup,
      Form
  } from "reactstrap";
+ import swal from "sweetalert";
  // reactstrap components
  import { Container, Row, Col} from "reactstrap";
  import {GetAllUserSubscriptionsByUser} from "../../services/api/services";
  import {GetCurrentUserInfo} from "../../services/api/services";
+ import {ClaimAllRewardService} from "../../services/api/services";
 
 function AllPixels() {
 
     const [userInfo, setUserInfo] = useState([]);
     const [userSubscriptions, setUserSubscriptions] = useState([]);
-    const [tableColums, setTableColums] = useState(['Serial','Pixel','Creation Date','License Timer','Nolu rewards','USDT Rewards','Claim Reward']);
-
+    const [sumOfNoluRewards, setSumOfNoluRewards] = useState(0);
+    const [tableColums, setTableColums] = useState(['Serial','Pixel','Creation Date','License Timer','Nolu rewards','USDT Rewards']);
+// let sumOfNoluRewards=;
 
     useEffect(() => {
         getUserInfo();
         
     } ,[])
 
-    // useEffect(() => {
-    // console.log("calue of user info iss")
-    // console.log(userInfo?userInfo:null)
-    // getAllUserSubscriptionsById(userInfo?userInfo.id:null);
 
-    // } ,[userInfo])
+const handleClaim=()=>{
 
+  swal({
+    title: "You are about to claim your rewards",
+    text: "Are you sure?",
+    icon: "info",
+    buttons: true,
+    dangerMode: false,
+    showCancelButton: true,      
+    confirmButtonColor: "black",
+}).then(function(result){
+  if(result){
+    let claimObj={
+      "user_id": userInfo.id,
+    }
 
+    ClaimAllRewardService(claimObj).then(res=>{
+      console.log("res.success")
+      console.log(res.message)
+      swal({
+        title: "Alert?",
+        text: res.message,
+        icon: "warning",
+        buttons: true,
+        dangerMode: false,
+        showCancelButton: false,      
+        confirmButtonColor: "#DD6B55",
+      })
+    }).catch(err=>{
+      console.log("res.error")
+      swal({
+        title: "Unsuccessful",
+        text: "Something went wrong",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+        showCancelButton: false,      
+        confirmButtonColor: "#DD6B55",
+      })
+    })
+  }else {
+    console.log("cancel clicked")
+  }
+
+});
+
+}
 
 
     function getUserInfo(){
@@ -94,10 +137,7 @@ function AllPixels() {
               
               <h3 className="mb-0">My Pixels ({userSubscriptions?userSubscriptions.length:0})
               
-              
               </h3>
-          
-
             
             </div>
             <div className="col text-right">
@@ -105,10 +145,19 @@ function AllPixels() {
               
                 color="warning"
                 href="#pablo"
-                onClick={(e) => e.preventDefault()}
+                onClick={handleClaim}
                 size="sm"
               >
-               Claim All
+               Pay Maintanence Fee
+              </Button>
+              <Button
+              
+                color="warning"
+                href="#pablo"
+                onClick={handleClaim}
+                size="sm"
+              >
+               Claim All 
               </Button>
             </div>
           </Row>
@@ -125,9 +174,11 @@ function AllPixels() {
             </tr>
           </thead>
           <tbody>
-          {/* 'Serial','Creation Date','License Timer','Nolu rewards','USDT Rewards','Claim' */}
+          
 
 {userSubscriptions?userSubscriptions.map((td,index)=>{
+  // setSumOfNoluRewards(sumOfNoluRewards+parseInt(td.nolu_reward_amount)+1)
+  // alert(typeof parseInt(td.nolu_reward_amount)) 
     return(
         <tr>
         <td>{td.id}</td>
@@ -141,21 +192,9 @@ function AllPixels() {
        </td>
         <td>{Moment(td.pixel_purchase_date).format('DD MMM YYYY')}</td>
         <td>{td.license_purchase_date?Moment(td.license_purchase_date).format('DD MMM YYYY'):"N/A"}</td>
-        <td>{td.license_purchase_date?td.nolu_reward_amount:"N/A"}</td>
-        <td>{td.license_purchase_date?td.usdt_reward_amount:"N/A"}</td>
-        <td>
-        <div className="col text-right">
-              <Button
-              disabled={claimReward(td.license_purchase_date)}
-                color="warning"
-                href="#pablo"
-                onClick={(e) => e.preventDefault()}
-                size="sm"
-              >
-               Claim 
-              </Button>
-            </div>
-        </td>
+        <td>{td.license_purchase_date?td.nolu_reward_amount:"N/A"} </td>
+        <td>{td.license_purchase_date?td.usdt_reward_amount:"N/A"} </td>
+     
         </tr>
     );
     }):''}
@@ -168,19 +207,6 @@ function AllPixels() {
                     className="pagination justify-content-end mb-0"
                     listClassName="justify-content-end mb-0"
                   >
-                    {/* <PaginationItem className={pageNumber>1?"":"disabled"}>
-                      <PaginationLink
-                        href="#pablo"
-                        onClick={(e) => {e.preventDefault()
-                            setPageNumber(pageNumber-1)
-                            pageNum(pageNumber)
-                        }}
-                        tabIndex="-1"
-                      >
-                        <i className="fas fa-angle-left" />
-                        <span className="sr-only">Previous</span>
-                      </PaginationLink>
-                    </PaginationItem> */}
                    
                     <PaginationItem>
                       <PaginationLink
