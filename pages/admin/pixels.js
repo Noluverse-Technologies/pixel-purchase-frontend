@@ -398,7 +398,7 @@ window.scrollTo({ top: 600, behavior: "smooth" });
                        {/* The below column is going to be repeated */}
                        {pixelData.map(function(d, idx){
                          return (
-                    <Col lg="6" md="6" >
+                    <Col lg="6" md="6" key={idx}>
                       <Button
                         className="btn-icon-clipboard pointer:none"
                         data-clipboard-text="air-baloon"

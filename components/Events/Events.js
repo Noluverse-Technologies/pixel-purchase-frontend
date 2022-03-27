@@ -1,9 +1,10 @@
 import React from "react";
 
 // reactstrap components
-import { Card, CardBody, CardTitle, CardHeader, Row, Col } from "reactstrap";
+import { Card, CardBody,  CardHeader } from "reactstrap";
 
 function Events({eventData}) {
+
   return (
     <>
       <Card className="shadow">
@@ -17,7 +18,7 @@ function Events({eventData}) {
                
                     {eventData.map(function(event, idx){
                     return (
-                        <>
+                        < div key={idx}>
                          <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
                 <div class="d-flex w-100 justify-content-between">
                 <h5 class="mb-1">{event.title}</h5>
@@ -27,7 +28,7 @@ function Events({eventData}) {
                 <small>Donec id elit non mi porta.</small>
                 <small>Start date:</small>
             </a>
-                        </>
+                        </div>
                     
                     )})} 
 
