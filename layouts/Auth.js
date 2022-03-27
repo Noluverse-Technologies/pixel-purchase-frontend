@@ -6,9 +6,7 @@ import { Container, Row, Col } from "reactstrap";
 import AuthNavbar from "components/Navbars/AuthNavbar.js";
 import AuthFooter from "components/Footers/AuthFooter.js";
 
-import routes from "routes.js";
-import { useRouter } from "next/router";
-import authProtection from "../components/Auth/AuthProtection";
+
 
 
 function Auth(props) {
