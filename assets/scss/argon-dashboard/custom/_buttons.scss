@@ -1,0 +1,22 @@
+//
+// Button
+//
+
+@import "buttons/button";
+@import "buttons/button-icon";
+@import "buttons/button-brand";
+
+.licenseButton:not(:disabled):not(.disabled) {
+  cursor: pointer;
+  background-color: #2dce89;
+  color: white !important;
+}
+
+.licenseButton span {
+  color: red;
+}
+
+.btn:disabled:not(.disabled) {
+  cursor: pointer;
+  background-color: rgb(221, 221, 221);
+}
