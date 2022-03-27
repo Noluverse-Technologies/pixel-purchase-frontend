@@ -5,7 +5,7 @@ import classnames from "classnames";
 import Chart from "chart.js";
 // react plugin used to create charts
 import { Line, Bar, Pie } from "react-chartjs-2";
-import CryptoWallet from "../../Components/CryptoWallet/CryptoWallet";
+import CryptoWallet from "../../Components/CryptoWallet/CryptoWallet.js";
 import contract from "../../Components/Contracts/SmartContract.json";
 // reactstrap Components
 import {
