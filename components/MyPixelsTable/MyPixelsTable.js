@@ -87,9 +87,9 @@ const returnNoData = () => {
         <Table className="align-items-center table-flush" responsive>
           <thead className="thead-light">
             <tr>
-              {tableColums.map((cl)=>{
+              {tableColums.map((cl,idx)=>{
                   return(
-                <th scope="col">{cl}</th>
+                <th key={idx} scope="col">{cl}</th>
                   );
 
               })}
@@ -100,7 +100,7 @@ const returnNoData = () => {
 
 {tableData.map((td,index)=>{
     return(
-        <tr>
+        <tr key={index}>
         <td>{td.id}</td>
         <td>
         <Link href="/admin/pixels">
