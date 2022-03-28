@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 
 
-const AuthProtection = (WrappedComponent) => {
+const AuthProtection = (WrappedComponent) => { 
 
   return (props) => {
 
