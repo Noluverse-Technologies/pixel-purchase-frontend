@@ -89,7 +89,7 @@ const returnNoData = () => {
             <tr>
               {tableColums.map((cl,idx)=>{
                   return(
-                <th key={idx} scope="col">{cl}</th>
+                <th key={idx} scope="col">{cl}</th> 
                   );
 
               })}
