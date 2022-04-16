@@ -293,6 +293,29 @@ export function ClaimAllRewardService(claimObj){
 }
 
 
+export function getDashboardOverview($user_id){
+    let param={
+        "user_id":$user_id
+    }
+
+    let authToken=localStorage.getItem("authToken");
+    return axios({
+        method: "get",
+        url: baseUrl+"overview/data",
+        params: param,
+        headers: {
+            "Authorization" : `Bearer ${authToken}`,
+            "Content-type": "application/json"
+        }
+      })
+    .then(res=>{
+        return res.data;
+    })
+    .catch(err=>{
+        console.log(err);
+    })
+}
+
 
 
 

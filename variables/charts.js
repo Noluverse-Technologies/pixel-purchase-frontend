@@ -6,28 +6,10 @@ if (typeof document === "undefined") {
     querySelector: () => {},
   };
 }
-/*!
 
-=========================================================
-* NextJS Argon Dashboard - v1.1.0
-=========================================================
 
-* Product Page: https://www.creative-tim.com/product/nextjs-argon-dashboard
-* Copyright 2021 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/nextjs-argon-dashboard/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 const Chart = require("chart.js");
-//
-// Chart extension for making the bars rounded
-// Code from: https://codepen.io/jedtrow/full/ygRYgo
-//
+
 
 Chart.elements.Rectangle.prototype.draw = function () {
   var ctx = this._chart.ctx;
@@ -224,9 +206,9 @@ function chartOptions() {
             backgroundColor: colors.transparent,
             borderCapStyle: "rounded",
           },
-          rectangle: {
-            backgroundColor: colors.theme["warning"],
-          },
+          // rectangle: {
+          //   backgroundColor: colors.theme["primary"],
+          // },
           arc: {
             backgroundColor: colors.theme["primary"],
             borderColor: mode === "dark" ? colors.gray[800] : colors.white,
@@ -375,53 +357,71 @@ let chartExample1 = {
   },
 };
 
-// Example 2 of Chart inside src/views/Index.js (Total orders - Card)
-let chartExample2 = {
-  options: {
-    scales: {
-      yAxes: [
-        {
-          ticks: {
-            callback: function (value) {
-              if (!(value % 10)) {
-                //return '$' + value + 'k'
-                return value;
-              }
-            },
-          },
-        },
-      ],
-    },
-    tooltips: {
-      callbacks: {
-        label: function (item, data) {
-          var label = data.datasets[item.datasetIndex].label || "";
-          var yLabel = item.yLabel;
-          var content = "";
-          if (data.datasets.length > 1) {
-            content += label;
-          }
-          content += yLabel;
-          return content;
-        },
-      },
-    },
-  },
-  data: {
-    labels: ["Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-    datasets: [
-      {
-        label: "Sales",
-        data: [25, 20, 30, 22, 17, 29],
-        maxBarThickness: 10,
-      },
-    ],
-  },
-};
+// // Example 2 of Chart inside src/views/Index.js (Total orders - Card)
+// let chartExample2 = {
+//   options: {
+//     scales: {
+//       yAxes: [
+//         {
+//           ticks: {
+//             callback: function (value) {
+//               if (!(value % 10)) {
+//                 //return '$' + value + 'k'
+//                 return value;
+//               }
+//             },
+//           },
+//         },
+//       ],
+//     },
+//     tooltips: {
+//       callbacks: {
+//         label: function (item, data) {
+//           var label = data.datasets[item.datasetIndex].label || "";
+//           var yLabel = item.yLabel;
+//           var content = "";
+//           if (data.datasets.length > 1) {
+//             content += label;
+//           }
+//           content += yLabel;
+//           return content;
+//         },
+//       },
+//     },
+//   },
+//   // data: {
+//   //   labels: ["Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+//   //   datasets: [
+//   //     {
+//   //       label: "Sales",
+//   //       backgroundColor: "blue",
+//   //       data: [25, 20, 30, 22, 17, 29],
+//   //       maxBarThickness: 10,
+//   //     },
+//   //   ],
+//   // },
+//   data: {
+//     labels: ["Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+//     datasets: [
+//       {
+//         label: "Nolu",
+//         data: [25, 20, 30, 22, 17, 29],
+//         backgroundColor: "#fb6340",
+//         maxBarThickness: 10,
+//       },
+//       {
+//         label: "usdt",
+//         backgroundColor: "#5e72e4",
+//         data: [3,7,4],
+//         maxBarThickness: 10
+//     },
+//     ],
+//   },
+// };
 
 module.exports = {
   chartOptions, // used inside src/views/Index.js
   parseOptions, // used inside src/views/Index.js
   chartExample1, // used inside src/views/Index.js
-  chartExample2, // used inside src/views/Index.js
+  // chartExample2, // used inside src/views/Index.js
 };

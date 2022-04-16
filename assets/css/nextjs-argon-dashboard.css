@@ -3001,7 +3001,8 @@ input[type="button"].btn-block {
 .custom-checkbox .custom-control-input:indeterminate ~ .custom-control-label::before {
   border-color: #5e72e4;
   background-color: #5e72e4;
-  box-shadow:; }
+  /* box-shadow:; */
+ }
 
 .custom-checkbox .custom-control-input:indeterminate ~ .custom-control-label::after {
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3e%3cpath stroke='%23fff' d='M0 2h4'/%3e%3c/svg%3e"); }
@@ -5220,7 +5221,11 @@ button.bg-darker:focus {
   border-radius: 0.4375rem !important; }
 
 .rounded-circle {
-  border-radius: 50% !important; }
+    height: 5.4rem;
+    border-radius: 50% !important;
+    width: 4.7rem;
+
+}
 
 .rounded-pill {
   border-radius: 50rem !important; }
@@ -5890,7 +5895,9 @@ button.bg-darker:focus {
   box-shadow: 0 0 0.5rem rgba(136, 152, 170, 0.075) !important; }
 
 .shadow, .card-profile-image img {
-  box-shadow: 0 0 2rem 0 rgba(136, 152, 170, 0.15) !important; }
+  box-shadow: 0 0 2rem 0 rgba(136, 152, 170, 0.15) !important; 
+
+}
 
 .shadow-lg {
   box-shadow: 0 0 3rem rgba(136, 152, 170, 0.175) !important; }
@@ -11996,6 +12003,8 @@ a.btn-icon-only {
     border-radius: 0.375rem;
     transform: translate(-50%, -30%);
     position: absolute;
+    width: 9.8rem;
+    height: 10.5rem;
     left: 50%;
     transition: all 0.15s ease; }
     .card-profile-image img:hover {

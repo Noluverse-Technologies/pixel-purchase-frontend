@@ -2,7 +2,7 @@ import React, { useState,useEffect,Fragment } from "react";
 import {GetPixelPackagesService} from "../../services/api/services";
 import {GetLicensePackagesService} from "../../services/api/services";
 import { ToastContainer, toast } from 'react-toastify';
-// import Events from "../../Components/Events/Events";
+import Events from "../../Components/Events/Events";
 import 'react-toastify/dist/ReactToastify.css';
 // reactstrap Components
 import {
@@ -437,7 +437,7 @@ window.scrollTo({ top: 600, behavior: "smooth" });
             </Card>
           </div>
           <div className="col-12 col-md-4">
-          {/* <Events eventData={eventsData?eventsData:[]}></Events> */}
+          <Events eventData={eventsData?eventsData:[]}></Events>
           </div>
           
         </Row>
