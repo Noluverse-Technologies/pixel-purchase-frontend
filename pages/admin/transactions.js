@@ -23,7 +23,7 @@ import Header from "Components/Headers/Header.js";
 import {GetCurrentUserInfo} from "../../services/api/services";
 import {GetUserTransactionsByMonthService} from "../../services/api/services";
 
-function Tables() {
+function Transactions() {
   Moment.locale('en');
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const columns=["entry", "product name", "date of Transaction", `total price($)`]
@@ -292,6 +292,6 @@ function Tables() {
   );
 }
 
-Tables.layout = Admin;
+Transactions.layout = Admin;
 
-export default Tables;
+export default Transactions;

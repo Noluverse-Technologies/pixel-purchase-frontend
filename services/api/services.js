@@ -186,6 +186,25 @@ export function GetUserTransactionsByMonthService(transactionObj){
         console.log(err);
     })
 }
+export function GetTopTransactionByUserService(userId){
+
+    let authToken=localStorage.getItem("authToken");
+    return axios({
+        method: "get",
+        url: baseUrl+"transactions/view",
+        params: {"user_id":userId},
+        headers: {
+            "Authorization" : `Bearer ${authToken}`,
+            "Content-type": "application/json"
+        }
+      })
+    .then(res=>{
+        return res.data;
+    })
+    .catch(err=>{
+        console.log(err);
+    })
+}
 
 
 export function GetNoluPlusPackageByIdService($id){

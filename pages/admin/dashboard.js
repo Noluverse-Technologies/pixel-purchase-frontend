@@ -7,6 +7,7 @@ import Chart from "chart.js";
 import { Line, Bar, Pie } from "react-chartjs-2";
 import CryptoWallet from "../../Components/CryptoWallet/CryptoWallet"; 
 import contract from "../../Components/Contracts/SmartContract.json";
+import { useRouter } from "next/router";
 // reactstrap Components
 import {
   Button,
@@ -34,14 +35,19 @@ import {
 } from "variables/charts.js";
 
 import Header from "Components/Headers/Header.js";
-import { getDashboardOverview } from "../../services/api/services";
+import { getDashboardOverview, GetTopTransactionByUserService } from "../../services/api/services";
 import { GetCurrentUserInfo } from "../../services/api/services";
-
+import Transactions from "./transactions";
+import Moment from 'moment';
 
 const ContractAddress = "0x355638a4eCcb777794257f22f50c289d4189F245";
 const abi = contract.abi;
 
 const Dashboard = (props) => {
+
+  const router=useRouter();
+
+
   const [activeNav, setActiveNav] = React.useState(1);
   const [chartExample1Data, setChartExample1Data] = React.useState("data1");
   const [totalRewardsInNolu, setTotalRewardsInNolu] = useState(0);
@@ -54,13 +60,14 @@ const Dashboard = (props) => {
   const [barChartMonths, setBarChartMonths] = useState(null)
   const [barChartData2, setBarChartData2] = useState(null)
   const [barChartMonths2, setBarChartMonths2] = useState(null)
+  const [topTransactionByUser, setTopTransactionByUser] = useState(null)
 
   
-
+  
 
 useEffect(() => {
 
-  console.log("getting overview data");
+  // GetTopTransactionByUser();
 
   GetCurrentUserInfo().then(res=>{
     console.log("result of getting user data");
@@ -87,6 +94,21 @@ useEffect(() => {
   })
   
 },[])
+
+
+useEffect(() => {
+console.log("this is user info sfaf");
+if(userInfo){
+GetTopTransactionByUserService(userInfo.id).then(res=>{
+      console.log("GetTopTransactionByUser")
+      console.log(res.data)
+      setTopTransactionByUser(res.data)
+    })
+  }
+},[userInfo])
+
+
+
 
 useEffect(() => {
   let months=[];
@@ -185,6 +207,85 @@ useEffect(() => {
   setBarChartData2(data2)
 } ,[totalMonthlyRewardsInNolu, totalMonthlyRewardsInUSDT])
 
+function getType(item){
+  if(item.pixel_id){
+    return `Pixel` 
+  }
+  if(item.license_id){
+    return `License` 
+  }
+
+  if(item.is_withdrawal_amount_paid){
+     return "Withdrawal";
+  }
+
+  if(item.is_reward_claimed){
+     return "Reward Claimed";
+  }
+
+  if(item.nolu_plus_subscription_id){
+     return "Nolu Plus Subscription";
+  }
+}
+
+function getPrice(item){
+  let totaldebits=0;
+  let totalCredits=0
+  
+  if(item.pixel_id){
+    let pprice=item.pixel_amount;
+    return pprice;
+  }
+  if(item.license_id){
+    let lprice=item.license_amount;
+    
+    return lprice;
+  }
+
+  if(item.is_withdrawal_amount_paid){
+     let wprice=item.withdrawal_fee_amount;
+     return wprice;
+  }
+
+  if(item.is_reward_claimed){
+     let rprice=item.reward_claimed_amount;
+     return rprice;
+  }
+  if(item.nolu_plus_subscription_id){
+
+     let npprice=item.has_nolu_plus_subscription?item.has_nolu_plus_subscription.has_nolu_plus_package.price:"ERROR";
+     
+     return npprice ;
+  }
+}
+
+function getItemPurchased(item){
+  console.log("item asli hai");
+  console.log(item);
+  if(item.pixel_id){
+    return item.has_pixel?item.has_pixel.name:""
+  }
+  if(item.license_id){
+    return item.has_license.name
+  }
+
+  if(item.is_withdrawal_amount_paid){
+     return "Withdrawal";
+  }
+
+  if(item.is_reward_claimed){
+     return "Reward Claimed";
+  }
+  if(item.nolu_plus_subscription_id){
+     return item.has_nolu_plus_subscription?item.has_nolu_plus_subscription.has_nolu_plus_package.name:"error occured";
+  }
+}
+
+function getTransactionDate(item){
+  console.log("here is item date");
+  console.log(item.date);
+ return Moment(item.date).format('DD MMM YYYY, h:mm a');
+}
 
 
 // Example 2 of Chart inside src/views/Index.js (Total orders - Card)
@@ -238,11 +339,7 @@ const chartExample2 = {
     ],
   },
 };
-function barChartLabels(){
 
-  
- 
- }
 
   const data = {
     labels: [
@@ -370,12 +467,6 @@ function barChartLabels(){
                         </div>
                       </Col>
                     </Row>
-                    {/* <p className="mt-3 mb-0 text-muted text-sm">
-                      <span className="text-success mr-2">
-                        <i className="fa fa-arrow-up" /> 3.48%
-                      </span>{" "}
-                      <span className="text-nowrap">Since last month</span>
-                    </p> */}
                   </CardBody>
                 </Card>
               </Col>
@@ -478,7 +569,10 @@ function barChartLabels(){
                     <Button
                       color="primary"
                       href="#pablo"
-                      onClick={(e) => e.preventDefault()}
+                      onClick={(e) =>{
+                        router.push('/admin/transactions');
+                        
+                      } }
                       size="sm"
                     >
                       See all
@@ -486,61 +580,34 @@ function barChartLabels(){
                   </div>
                 </Row>
               </CardHeader>
+              {/* Transaction Table */}
               <Table className="align-items-center table-flush" responsive>
                 <thead className="thead-light">
                   <tr>
-                    <th scope="col">Page name</th>
-                    <th scope="col">Visitors</th>
-                    <th scope="col">Unique users</th>
-                    <th scope="col">Bounce rate</th>
+                    <th scope="col">Entry</th>
+                    <th scope="col">Product Name</th>
+                    <th scope="col">Date of Transaction</th>
+                    <th scope="col">Total Price</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <th scope="row">/argon/</th>
-                    <td>4,569</td>
-                    <td>340</td>
-                    <td>
-                      <i className="fas fa-arrow-up text-success mr-3" /> 46,53%
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">/argon/index.html</th>
-                    <td>3,985</td>
-                    <td>319</td>
-                    <td>
-                      <i className="fas fa-arrow-down text-warning mr-3" />{" "}
-                      46,53%
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">/argon/charts.html</th>
-                    <td>3,513</td>
-                    <td>294</td>
-                    <td>
-                      <i className="fas fa-arrow-down text-warning mr-3" />{" "}
-                      36,49%
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">/argon/tables.html</th>
-                    <td>2,050</td>
-                    <td>147</td>
-                    <td>
-                      <i className="fas fa-arrow-up text-success mr-3" /> 50,87%
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">/argon/profile.html</th>
-                    <td>1,795</td>
-                    <td>190</td>
-                    <td>
-                      <i className="fas fa-arrow-down text-danger mr-3" />{" "}
-                      46,53%
-                    </td>
-                  </tr>
+                {
+                      topTransactionByUser && topTransactionByUser.map((item,index)=>{
+                        return(
+                          <tr>
+                          <td key={"entry"+index}>{getType(item)}</td>
+                          <td key={"name"+index}>{getItemPurchased(item)}</td>
+                          <td key={"date"+index}>{getTransactionDate(item)}</td>
+                          <td key={"price"+index}><h4 className={ getPrice(item) > 0? "ml-0 text-success":"ml-0 text-danger"}>{`${getPrice(item)}`}</h4></td>
+                          
+                          </tr>
+                        )
+                      })
+                    }
                 </tbody>
               </Table>
+
+              
             </Card>
           </Col>
           <Col xl="4">
